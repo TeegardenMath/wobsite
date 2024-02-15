@@ -21,6 +21,11 @@ header {
 	top:0;
 	float:left;
 	margin:10px auto;
+	display:block;
+}
+
+.collapser{
+	float:right;
 }
 
 .problem {

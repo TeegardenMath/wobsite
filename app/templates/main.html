@@ -20,14 +20,17 @@
   		<h1>Competition</h1>
   	</header>
 
-      <div id="personalInfo" class="collapsible">
-        <p>{{form.username.label}}</p>
-        <p>{{form.username()}}</p>   
+      <div id="personalInfo">
+        <button type="button" class="collapser">»</button>
+        <div id="infoContents" >
+          <p>{{form.username.label}}</p>
+          <p>{{form.username()}}</p>   
 
-        <p>{{form.email.label}}</p>
-        <p>{{form.email()}}</p>  
+          <p>{{form.email.label}}</p>
+          <p>{{form.email()}}</p>  
 
-        <p>{{form.submit()}}</p> 
+          <p>{{form.submit()}}</p> 
+        </div>
       </div>
 
       <div id="problemsBlock">
@@ -73,13 +76,23 @@
     </form>
 
 
-    <script> /* this gives collapsible elements their behavior*/
-      var coll = document.getElementsByClassName("collapsible");
+    <script type="text/javascript"> /* this gives collapsible elements their behavior*/
+
+      var coll = document.getElementsByClassName("collapser");
       var i;
 
       for (i = 0; i < coll.length; i++) {
-
+        coll[i].addEventListener("click", function() {
+          var collapsible = this.nextElementSibling;
+          if (collapsible.style.display === "none") {
+            collapsible.style.display = "block";
+          } else {
+            collapsible.style.display = "none";
+          }
+        })
       }
+
+
     </script> 
 
   </body>
