@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+</head>
+<body>
+	<!--table for displaying submissions-->
+	<table>
+		<thead>
+			<tr>
+				<th>Username</th>
+				<th>Email</th>
+				<th>Answer1</th>
+				<th>Answer2</th>
+				<th>Answer3</th>
+				<th>Answer4</th>
+				<th>Answer5</th>
+				<th>Answer6</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for item in rows %}
+			<!-- loop here to create rows -->
+			<tr>
+				<td>{{ item[1] }}</td>
+				<td>{{ item[2] }}</td>
+				<td>{{ item[3] }}</td>
+				<td>{{ item[4] }}</td>
+				<td>{{ item[5] }}</td>
+				<td>{{ item[6] }}</td>
+				<td>{{ item[7] }}</td>
+				<td>{{ item[8] }}</td>
+			</tr>
+			{% endfor %}	
+		</tbody>
+		</table>
+
+</body>
+</html>

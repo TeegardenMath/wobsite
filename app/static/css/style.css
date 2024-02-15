@@ -1,0 +1,54 @@
+
+header {
+	text-align: center;
+	background-color: rgba(133,196,40,0.5);
+	width:100%;
+	border:2px solid rgb(133,196,40);
+	padding:10px;
+}
+
+#problemsBlock{
+	text-align: center;
+	width:100%;
+}
+
+#personalInfo{
+	background-color: rgba(133,196,40,0.5);
+	border:2px solid rgb(133,196,40);
+	padding:10px;
+	max-width: 200px;
+	position:sticky;
+	top:0;
+	float:left;
+	margin:10px auto;
+}
+
+.problem {
+	background-color: rgba(28,116,188,0.25);
+	max-width: 750px;
+	border: 2px solid rgb(28,116,188);
+	padding:0px 20px 20px 20px;
+	border-radius:5px;
+	text-align: center;
+	margin:10px auto;
+}
+
+.problem h2 {
+	color:rgb(28,116,188);
+	float: left;
+}
+
+footer {
+	background-color: rgba(133,196,40,0.25);
+	width:100%;
+	border:2px solid rgb(133,196,40);
+	z-index:10;
+	position:sticky;
+	bottom:0;
+	text-align:center;
+	padding: 10px;
+}
+
+footer input{
+	padding:5px;
+}
