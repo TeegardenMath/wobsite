@@ -20,7 +20,7 @@
   		<h1>Competition</h1>
   	</header>
 
-      <div id="personalInfo">
+      <div id="personalInfo" class="collapsible">
         <p>{{form.username.label}}</p>
         <p>{{form.username()}}</p>   
 
@@ -72,6 +72,15 @@
 
     </form>
 
+
+    <script> /* this gives collapsible elements their behavior*/
+      var coll = document.getElementsByClassName("collapsible");
+      var i;
+
+      for (i = 0; i < coll.length; i++) {
+
+      }
+    </script> 
 
   </body>
 </html>
