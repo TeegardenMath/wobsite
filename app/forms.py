@@ -26,8 +26,26 @@ def length(min=-1, max=-1,fieldname="Field"):
 
     return _length
 
+def forbiddenChars(fieldname="Field"):
+    charlist=['#','&','@','"',"'",'{','}','\\','&','*','?','/','$','!',':',';','+','`','|','=','<','>','(',')']
+    badchars=[]
+    message = '%s contains the following forbidden characters: ' % (fieldname)
+
+    def _forbiddenChars(form, field):
+        username = field.data
+        isProblem = False
+        for badchar in charlist:
+            if badchar in username:
+                isProblem = True 
+                badchars.append(badchar)
+        badcharlist=" ".join(badchars)
+        if isProblem:
+            raise ValidationError(message+badcharlist)
+
+    return _forbiddenChars
+
 class TestForm(FlaskForm):
-    username = StringField('Username', validators=[InputRequired(),length(min=1,max=50,fieldname="Username")])
+    username = StringField('Username', validators=[InputRequired(),length(min=1,max=50,fieldname="Username"),forbiddenChars("Username")])
     email = StringField('Email', validators=[InputRequired(),Email()])
     answer1 = DecimalField('Answer', validators=[Optional()])
     answer2 = DecimalField('Answer', validators=[Optional()])
