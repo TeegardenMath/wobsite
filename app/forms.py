@@ -12,13 +12,14 @@ from wtforms.fields import (
 from wtforms.validators import (
     InputRequired,
     ValidationError,
-    Optional
+    Optional,
+    Email
 )
 
 
 class TestForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired()])
-    email = StringField('Email', validators=[InputRequired()])
+    email = StringField('Email', validators=[InputRequired(),Email()])
     answer1 = DecimalField('Answer', validators=[Optional()])
     answer2 = DecimalField('Answer', validators=[Optional()])
     answer3 = DecimalField('Answer', validators=[Optional()])
