@@ -16,9 +16,18 @@ from wtforms.validators import (
     Email
 )
 
+def length(min=-1, max=-1,fieldname="Field"):
+    message = '%s must be between %d and %d characters long.' % (fieldname, min, max)
+
+    def _length(form, field):
+        l = field.data and len(field.data) or 0
+        if l < min or max != -1 and l > max:
+            raise ValidationError(message)
+
+    return _length
 
 class TestForm(FlaskForm):
-    username = StringField('Username', validators=[InputRequired()])
+    username = StringField('Username', validators=[InputRequired(),length(min=1,max=50,fieldname="Username")])
     email = StringField('Email', validators=[InputRequired(),Email()])
     answer1 = DecimalField('Answer', validators=[Optional()])
     answer2 = DecimalField('Answer', validators=[Optional()])

@@ -20,12 +20,25 @@
   		<h1>Competition</h1>
   	</header>
 
+      <!-- Here we have the box for entering personal info
+          and submitting the form. -->
+
       <div id="personalInfo">
         <button type="button" class="collapser">»</button>
         <div id="infoContents" >
+
+          <!--Username entry box and error display-->
           <p>{{form.username.label}}</p>
           <p>{{form.username()}}</p>   
+          {% if form.username.errors %}
+            <ul class="errors">
+              {% for error in form.username.errors %}
+                <li>{{error}}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
 
+          <!--Email entry box and error display-->
           <p>{{form.email.label}}</p>
           <p>{{form.email()}}</p>  
           {% if form.email.errors %}
@@ -36,6 +49,7 @@
             </ul>
           {% endif %}
 
+          <!-- Submit button -->
           <p>{{form.submit()}}</p> 
         </div>
       </div>
