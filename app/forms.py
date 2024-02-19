@@ -7,7 +7,9 @@ from wtforms.fields import (
     SubmitField, 
     TextAreaField, 
     TimeField,
-    DecimalField
+    DecimalField,
+    FieldList,
+    FormField
 )
 from wtforms.validators import (
     InputRequired,
@@ -44,6 +46,12 @@ def forbiddenChars(fieldname="Field"):
 
     return _forbiddenChars
 
+#this is the basic format for each question's answer field
+class AnswerForm(FlaskForm):
+    class Meta:
+        csrf = False
+    answer = DecimalField('Answer', validators=[Optional()])
+
 class TestForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired(),length(min=1,max=50,fieldname="Username"),forbiddenChars("Username")])
     email = StringField('Email', validators=[InputRequired(),Email()])
@@ -53,4 +61,5 @@ class TestForm(FlaskForm):
     answer4 = DecimalField('Answer', validators=[Optional()])
     answer5 = DecimalField('Answer', validators=[Optional()])
     answer6 = DecimalField('Answer', validators=[Optional()])
+    answers = FieldList(FormField(AnswerForm), min_entries=6) 
     submit = SubmitField('Submit answers')
