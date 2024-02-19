@@ -17,15 +17,16 @@ CONNECTION_PARAMETERS = {
 
 @bp.route("/", methods=['GET', 'POST'])
 def main():
-
-	#this is a list of problems
-	problemStatements=["""When \\(a \\ne 0\\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
-    $$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$""", 
-						"Subtract things", 
-						"Do math", 
-						"What is it", 
-						"A question",
-						 "Guess"]
+	with open('app/problembank/problemlist1.txt') as f:
+		problemStatements = f.read().splitlines()
+#this is a list of problems
+#	problemStatements=["""When \\(a \\ne 0\\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
+#    $$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$""", 
+#						"Subtract things", 
+#						"Do math", 
+#						"What is it", 
+#						"A question",
+#						 "Guess"]
 	form = TestForm()
 
 	#label the problems
