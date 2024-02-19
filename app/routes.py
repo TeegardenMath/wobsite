@@ -1,7 +1,7 @@
 from flask import (Blueprint, render_template, redirect, url_for)
 import os
 import psycopg2
-from app.forms import TestForm
+from app.forms import create_test_form
 
 #create a blueprint
 bp = Blueprint('main', __name__, url_prefix='/') 
@@ -17,17 +17,12 @@ CONNECTION_PARAMETERS = {
 
 @bp.route("/", methods=['GET', 'POST'])
 def main():
+
+	#take the problem statements from external file
 	with open('app/problembank/problemlist1.txt') as f:
 		problemStatements = f.read().splitlines()
-#this is a list of problems
-#	problemStatements=["""When \\(a \\ne 0\\), there are two solutions to \(ax^2 + bx + c = 0\) and they are
-#    $$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$""", 
-#						"Subtract things", 
-#						"Do math", 
-#						"What is it", 
-#						"A question",
-#						 "Guess"]
-	form = TestForm()
+
+	form = create_test_form(len(problemStatements))
 
 	#label the problems
 	ii = 0

@@ -52,14 +52,16 @@ class AnswerForm(FlaskForm):
         csrf = False
     answer = DecimalField('Answer', validators=[Optional()])
 
-class TestForm(FlaskForm):
-    username = StringField('Username', validators=[InputRequired(),length(min=1,max=50,fieldname="Username"),forbiddenChars("Username")])
-    email = StringField('Email', validators=[InputRequired(),Email()])
-    answer1 = DecimalField('Answer', validators=[Optional()])
-    answer2 = DecimalField('Answer', validators=[Optional()])
-    answer3 = DecimalField('Answer', validators=[Optional()])
-    answer4 = DecimalField('Answer', validators=[Optional()])
-    answer5 = DecimalField('Answer', validators=[Optional()])
-    answer6 = DecimalField('Answer', validators=[Optional()])
-    answers = FieldList(FormField(AnswerForm), min_entries=6) 
-    submit = SubmitField('Submit answers')
+def create_test_form(problemCount):
+    class TestForm(FlaskForm):
+        username = StringField('Username', validators=[InputRequired(),length(min=1,max=50,fieldname="Username"),forbiddenChars("Username")])
+        email = StringField('Email', validators=[InputRequired(),Email()])
+        answer1 = DecimalField('Answer', validators=[Optional()])
+        answer2 = DecimalField('Answer', validators=[Optional()])
+        answer3 = DecimalField('Answer', validators=[Optional()])
+        answer4 = DecimalField('Answer', validators=[Optional()])
+        answer5 = DecimalField('Answer', validators=[Optional()])
+        answer6 = DecimalField('Answer', validators=[Optional()])
+        answers = FieldList(FormField(AnswerForm),min_entries=problemCount) 
+        submit = SubmitField('Submit answers')
+    return TestForm()
