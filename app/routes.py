@@ -1,6 +1,5 @@
 from flask import (Blueprint, render_template, redirect, url_for, session, request)
-import os
-import psycopg2
+import os, psycopg2, math
 from app.forms import create_test_form
 
 #create a blueprint
@@ -79,7 +78,7 @@ def main():
 					curs.execute(sqlstatement, answerlist)
 
 					#redirect on submission success
-					return redirect(url_for(".submitted",score=score))
+					return redirect(url_for(".submitted",score=score,maxscore=problemcounter-1))
 	else:
 		print(form.errors)
 	return render_template("main.html", form=form)
@@ -103,5 +102,15 @@ def highscores():
 
 @bp.route("/submitted")
 def submitted():
-	score=request.args.get("score")
-	return render_template("submitted.html",score=score)
+	score=int(request.args.get("score"))
+	maxscore=int(request.args.get("maxscore"))
+	roundedperten=math.floor(10*score/maxscore)
+	congratslist=["Oof","Oof","Oof","Oof","Better luck next time","Better luck next time","Not so bad","Not too shabby","Nicely done","Awesome job","Fantabulous"]
+	return render_template("submitted.html",score=score,maxscore=maxscore,congrats=congratslist[roundedperten])
+
+
+
+
+
+
+
