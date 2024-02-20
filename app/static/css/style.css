@@ -11,6 +11,18 @@ body {
 	margin:0px;
 }
 
+
+/* hide the adjustment arrows on input fields */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; 
+}
+input[type=number] {
+    -moz-appearance:textfield;
+}
+/* done hiding arrows */
+
 #navbar {
 	text-align: center;
 	background-color: rgba(133,196,40,0.5);
@@ -49,8 +61,12 @@ body {
 	padding:1px;
 }
 
-.collapser{
+.collapser {
 	float:right;
+}
+
+.errorZone {
+	font-size:0.75em;
 }
 
 .problem {

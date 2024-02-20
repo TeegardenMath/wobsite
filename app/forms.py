@@ -18,6 +18,7 @@ from wtforms.validators import (
     Email
 )
 
+#check input length
 def length(min=-1, max=-1,fieldname="Field"):
     message = '%s must be between %d and %d characters long.' % (fieldname, min, max)
 
@@ -28,6 +29,7 @@ def length(min=-1, max=-1,fieldname="Field"):
 
     return _length
 
+#check for forbidden characters
 def forbiddenChars(fieldname="Field"):
     charlist=['#','&','@','"',"'",'{','}','\\','&','*','?','/','$','!',':',';','+','`','|','=','<','>','(',')']
     badchars=[]
@@ -46,6 +48,34 @@ def forbiddenChars(fieldname="Field"):
 
     return _forbiddenChars
 
+def normalizeString(sus):
+    sus=sus.upper()
+    sus=sus.replace("U","V")
+    sus=sus.replace("J","I")
+    sus=sus.replace("L","I")
+    sus=sus.replace("1","I")
+    sus=sus.replace("3","E")
+    sus=sus.replace("0","O")
+    sus=sus.replace("8","B")
+    sus=sus.replace("4","A")
+    sus=sus.replace("C","K")
+    return sus
+
+#profanity filter
+def profanityFilter(fieldname="Field"):
+    def _profanityFilter(form, field):
+        username = field.data
+        username=normalizeString(username)
+        isProblem = False
+        if "FVK" in username:
+            isProblem = True
+        
+        if isProblem:
+            raise ValidationError("That username is not available.")
+
+    return _profanityFilter
+
+
 #this is the basic format for each question's answer field
 class AnswerForm(FlaskForm):
     class Meta:
@@ -54,7 +84,7 @@ class AnswerForm(FlaskForm):
 
 def create_test_form(problemCount):
     class TestForm(FlaskForm):
-        username = StringField('Username', validators=[InputRequired(),length(min=1,max=50,fieldname="Username"),forbiddenChars("Username")])
+        username = StringField('Username', validators=[InputRequired(),length(min=1,max=50,fieldname="Username"),forbiddenChars("Username"),profanityFilter("Username")])
         email = StringField('Email', validators=[InputRequired(),Email()])
         answer1 = DecimalField('Answer', validators=[Optional()])
         answer2 = DecimalField('Answer', validators=[Optional()])
