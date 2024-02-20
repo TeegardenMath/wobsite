@@ -31,6 +31,7 @@ body {
 }
 
 #personalInfo{
+	z-index:5;
 	background-color: rgba(133,196,40,1);
 	border:2px solid rgb(133,196,40);
 	padding:10px;
@@ -68,6 +69,7 @@ h2 {
 
 .problem h2{
 	float: left;
+	position:absolute;
 }
 
 footer {
