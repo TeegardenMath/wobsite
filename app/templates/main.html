@@ -13,8 +13,11 @@
 
   <body>
     <form method="post" action="">
-      {{form.csrf_token}}
+    {{form.csrf_token}}
 
+    <div id="navbar">
+      {% include 'navbar.html' %}
+    </div>
       
   	<header>
   		<h1>Competition</h1>
@@ -29,7 +32,18 @@
 
           <!--Username entry box and error display-->
           <p>{{form.username.label}}</p>
-          <p>{{form.username()}}</p>   
+          <div>
+              {{form.username()}}
+              <div class="hoverable" id="personalInfoHoverable">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                  <path fill=transparent stroke=rgba(133,196,40,0.5) stroke-width="2" d="m10,1.3a8.6,8.6 0 1,1-0.1,0zM7,8a3,3 0 1,1 3,3v2m0,1v2"/>
+                </svg>
+                <span class="hovertext">For the public scoreboard.</span>
+              </div> 
+          </div>
+
+
+          
           {% if form.username.errors %}
             <ul class="errors">
               {% for error in form.username.errors %}
@@ -40,7 +54,15 @@
 
           <!--Email entry box and error display-->
           <p>{{form.email.label}}</p>
-          <p>{{form.email()}}</p>  
+          <div>
+              {{form.email()}}
+              <div class="hoverable" id="personalInfoHoverable">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                  <path fill=transparent stroke=rgba(133,196,40,0.5) stroke-width="2" d="m10,1.3a8.6,8.6 0 1,1-0.1,0zM7,8a3,3 0 1,1 3,3v2m0,1v2"/>
+                </svg>
+                <span class="hovertext">Not publicly displayed.</span>
+              </div> 
+          </div>
           {% if form.email.errors %}
             <ul class="errors">
               {% for error in form.email.errors %}

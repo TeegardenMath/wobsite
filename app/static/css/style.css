@@ -1,10 +1,28 @@
+@font-face {
+  font-family: latinModern;
+  src: url('subset-LMRoman12-Bold.woff') format('woff');
+}
 
 header {
+	text-align: center;
+}
+
+body {
+	margin:0px;
+}
+
+#navbar {
 	text-align: center;
 	background-color: rgba(133,196,40,0.5);
 	width:100%;
 	border:2px solid rgb(133,196,40);
 	padding:10px;
+}
+
+.navElement{
+	padding:10px 20px;
+	font-family: "latinModern", "Times New Roman";
+	text-decoration: none;
 }
 
 #problemsBlock{
@@ -18,10 +36,16 @@ header {
 	padding:10px;
 	max-width: 200px;
 	position:sticky;
-	top:0;
+	top:10px;
 	float:left;
-	margin:10px auto;
+	margin:10px 10px;
 	display:block;
+}
+
+#personalInfoHoverable{
+	position:absolute;
+	right:20px;
+	padding:1px;
 }
 
 .collapser{
@@ -38,8 +62,11 @@ header {
 	margin:10px auto;
 }
 
-.problem h2 {
+h2 {
 	color:rgb(28,116,188);
+}
+
+.problem h2{
 	float: left;
 }
 
@@ -57,3 +84,48 @@ footer {
 footer input{
 	padding:5px;
 }
+
+ table, th, td {
+  margin-left: auto;
+  margin-right: auto;
+  padding:10px 20px 10px 20px;
+}
+
+#highscores tr:nth-child(even) {
+	td:nth-child(2), td:nth-child(3) {background-color: rgba(28,116,188,0.25);}
+}
+
+#highscores tr:nth-child(odd) {
+	td:nth-child(2), td:nth-child(3) {background-color: rgba(133,196,40,0.25);}
+}
+
+#highscores td:nth-child(3) {
+	text-align: center;
+}
+
+.hoverable {
+  position: relative;
+  display: inline-block;
+}
+
+.hoverable .hovertext {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgb(231, 246, 209);
+  color: black;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  position: absolute;
+  z-index: 1;
+  left:0px;
+  top:30px;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.hoverable:hover .hovertext {
+  visibility: visible;
+}
+
+

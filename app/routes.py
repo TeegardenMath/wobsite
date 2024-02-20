@@ -14,6 +14,20 @@ CONNECTION_PARAMETERS = {
     "host": os.environ.get("DB_HOST"),
 }
 
+def grade(scantron):
+	with open('app/problembank/answerlist1.txt') as f:
+		answerKey = f.read().splitlines()
+
+	i=0
+	score=0
+	while i < len(scantron):
+		if scantron[i] == float(answerKey[i]):
+			score+=1
+		i+=1
+
+	return score
+
+
 
 @bp.route("/", methods=['GET', 'POST'])
 def main():
@@ -33,24 +47,32 @@ def main():
 
 	#form submission stuff
 	if form.validate_on_submit():
+
+			#compile a dictionary of all the answers
+			answerlist={}
+			scantron=[]
+			problemcounter=1
+			problemkeylist="username,email"
+			problemkeylist2="'"+form.username.data+"\',\'"+form.email.data+"'"
+			for answer in form.answers:
+				problemkey = "answer"+str(problemcounter)
+				answerlist[problemkey]=answer.answer.data
+				problemkeylist=problemkeylist+","
+				problemkeylist2=problemkeylist2+","
+				problemkeylist=problemkeylist+problemkey
+				problemkeylist2=problemkeylist2+"%("+problemkey+")s"
+				scantron.append(answer.answer.data)
+				problemcounter+=1
+
+			score = grade(scantron)
+			problemkeylist=problemkeylist+",grade"
+			problemkeylist2=problemkeylist2+","+str(score)
+
+
 			#make a connection
 			with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
 				#create a cursor
 				with conn.cursor() as curs:
-					#compile a dictionary of all the answers
-					answerlist={}
-					problemcounter=1
-					problemkeylist="username, email"
-					problemkeylist2="'"+form.username.data+"\',\'"+form.email.data+"'"
-					for answer in form.answers:
-						problemkey = "answer"+str(problemcounter)
-						answerlist[problemkey]=answer.answer.data
-						#if problemcounter > 1:
-						problemkeylist=problemkeylist+","
-						problemkeylist2=problemkeylist2+","
-						problemkeylist=problemkeylist+problemkey
-						problemkeylist2=problemkeylist2+"%("+problemkey+")s"
-						problemcounter+=1
 
 					#and now run that sql statement
 					sqlstatement="INSERT INTO submissions ("+problemkeylist+") VALUES ("+problemkeylist2+");"
@@ -63,18 +85,19 @@ def main():
 		print(form.errors)
 	return render_template("main.html", form=form)
 
-@bp.route("/submissions")
-def submissions():
+@bp.route("/highscores")
+def highscores():
 	#make a connection
 	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
 		#create a cursor
 		with conn.cursor() as curs:
 			curs.execute("""
-				SELECT id, username, email, answer1, answer2, answer3, answer4, answer5, answer6
+				SELECT username, grade
 				FROM submissions
-				ORDER BY id;
+				ORDER BY grade;
 				""")
 			#fetch the records
 			rows = curs.fetchall()
 			#return the records
-			return render_template("submissions.html", rows=rows)
+			return render_template("highscores.html", rows=rows[:10])
+
