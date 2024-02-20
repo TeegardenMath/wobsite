@@ -1,4 +1,4 @@
-from flask import (Blueprint, render_template, redirect, url_for)
+from flask import (Blueprint, render_template, redirect, url_for, session, request)
 import os
 import psycopg2
 from app.forms import create_test_form
@@ -78,12 +78,12 @@ def main():
 					sqlstatement="INSERT INTO submissions ("+problemkeylist+") VALUES ("+problemkeylist2+");"
 					curs.execute(sqlstatement, answerlist)
 
-
-					#now actually display it
-					return render_template("main.html", form=form)
+					#redirect on submission success
+					return redirect(url_for(".submitted",score=score))
 	else:
 		print(form.errors)
 	return render_template("main.html", form=form)
+
 
 @bp.route("/highscores")
 def highscores():
@@ -101,3 +101,7 @@ def highscores():
 			#return the records
 			return render_template("highscores.html", rows=rows[:10])
 
+@bp.route("/submitted")
+def submitted():
+	score=request.args.get("score")
+	return render_template("submitted.html",score=score)
