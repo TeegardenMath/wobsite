@@ -94,7 +94,7 @@ def highscores():
 			curs.execute("""
 				SELECT username, grade
 				FROM submissions
-				ORDER BY grade;
+				ORDER BY grade DESC NULLS LAST;
 				""")
 			#fetch the records
 			rows = curs.fetchall()

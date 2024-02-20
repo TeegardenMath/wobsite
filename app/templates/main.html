@@ -29,7 +29,6 @@
       <div id="personalInfo">
         <button type="button" class="collapser">»</button>
         <div id="infoContents" >
-
           <!--Username entry box and error display-->
           <p>{{form.username.label}}</p>
           <div>
@@ -62,6 +61,7 @@
                 <span class="hovertext">Not publicly displayed.</span>
               </div> 
           </div>
+          
           <div class="errorZone">
           {% if form.email.errors %}
               {% for error in form.email.errors %}
