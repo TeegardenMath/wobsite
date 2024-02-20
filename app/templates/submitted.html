@@ -10,8 +10,23 @@
 	<div id="navbar">
       {% include 'navbar.html' %}
     </div>
-    {{congrats}}!
-    {{score}} out of {{maxscore}}
+
+    <div id="results">
+	    <h2>{{congrats}}!</h2>
+	    <h3>{{score}} out of {{maxscore}}</h3>
+	    <div id="resultstable">
+		    {% for item in results %}
+		    	Problem {{ loop.index }}
+		    	{% if item == "1" %}
+		    		✓
+		    	{% endif %}
+		    	{% if item == "0" %}
+		    		✗
+		    	{% endif %}
+		    	<br>
+		    {% endfor %}
+		</div>
+	</div>
 
 </body>
 </html>
