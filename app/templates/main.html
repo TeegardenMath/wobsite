@@ -12,8 +12,10 @@
       {% include 'navbar.html' %}
   </div>
 
-  <a href="/test/1">Test 1</a>
-  <a href="/test/2">Test 2</a>
+  {% for test in testlist %}
+    <a href="/test/{{test}}">Test {{test}}</a>
+  {% endfor %}
+
 
 </body>
 </html>
