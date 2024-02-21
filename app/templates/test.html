@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+
+  <head>
+    <title>Competition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+  </head>
+
+
+  <body>
+    <form method="post" action="">
+    {{form.csrf_token}}
+
+    <div id="navbar">
+      {% include 'navbar.html' %}
+    </div>
+      
+  	<header>
+  		<h1>Competition</h1>
+  	</header>
+
+      <!-- Here we have the box for entering personal info
+          and submitting the form. -->
+
+      <div id="personalInfo">
+        <button type="button" class="collapser">»</button>
+        <div id="infoContents" >
+          <!--Username entry box and error display-->
+          <p>{{form.username.label}}</p>
+          <div>
+              {{form.username()}}
+              <div class="hoverable" id="personalInfoHoverable">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                  <path fill=transparent stroke=rgba(133,196,40,0.5) stroke-width="2" d="m10,1.3a8.6,8.6 0 1,1-0.1,0zM7,8a3,3 0 1,1 3,3v2m0,1v2"/>
+                </svg>
+                <span class="hovertext">For the public scoreboard.</span>
+              </div> 
+          </div>
+
+
+          <div class="errorZone">
+            {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                  {{error}}<br>
+                {% endfor %}
+            {% endif %}
+          </div>
+
+          <!--Email entry box and error display-->
+          <p>{{form.email.label}}</p>
+          <div>
+              {{form.email()}}
+              <div class="hoverable" id="personalInfoHoverable">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                  <path fill=transparent stroke=rgba(133,196,40,0.5) stroke-width="2" d="m10,1.3a8.6,8.6 0 1,1-0.1,0zM7,8a3,3 0 1,1 3,3v2m0,1v2"/>
+                </svg>
+                <span class="hovertext">Not publicly displayed.</span>
+              </div> 
+          </div>
+          
+          <div class="errorZone">
+          {% if form.email.errors %}
+              {% for error in form.email.errors %}
+                {{error}}<br>
+              {% endfor %}
+          {% endif %}
+          </div>
+
+          <!-- Submit button -->
+          <p>{{form.submit()}}</p> 
+        </div>
+      </div>
+
+      <div id="problemsBlock">
+
+      {% for answer in form.answers %}
+        <section class="problem">
+          <h2>Problem {{ loop.index }}</h2>
+          <p>{{ answer.label }}</p>
+          <p>{{ answer['answer'] }}</p>
+        </section>
+      {% endfor %}
+
+      </div>
+
+
+    </form>
+
+
+    <script type="text/javascript"> /* this gives collapsible elements their behavior*/
+
+      var coll = document.getElementsByClassName("collapser");
+      var i;
+
+      for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+          var collapsible = this.nextElementSibling;
+          if (collapsible.style.display === "none") {
+            collapsible.style.display = "block";
+          } else {
+            collapsible.style.display = "none";
+          }
+        })
+      }
+
+
+    </script> 
+
+  </body>
+</html>
