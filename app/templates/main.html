@@ -12,9 +12,16 @@
       {% include 'navbar.html' %}
   </div>
 
-  {% for test in testlist %}
-    <a href="/test/{{test}}">Test {{test}}</a>
-  {% endfor %}
+  <table class="standardTable">
+    <thead></thead>
+    <tbody>
+      {% for test in testlist %}
+        <tr>
+          <td><a href="/test/{{test[0]}}">{{test[1]}}</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 
 
 </body>
