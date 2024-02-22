@@ -135,7 +135,6 @@ def main():
 	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
 		#create a cursor
 		with conn.cursor() as curs:
-			#first we find the list of problem IDs for this test
 			curs.execute("""
 				SELECT id, name
 				FROM tests
@@ -144,18 +143,30 @@ def main():
 	return render_template("main.html", testlist=testList)
 
 
-@bp.route("/test/<testname>", methods=['GET', 'POST'])
-def test(testname):
-	form = openTest(testname)
+@bp.route("/test/<testID>", methods=['GET', 'POST'])
+def test(testID):
+	form = openTest(testID)
 
 	#form submission stuff
 	if form.validate_on_submit():
-		urlreturn = gradeTest(form,testname)
+		urlreturn = gradeTest(form,testID)
 		return redirect(urlreturn)
 	else:
 		print(form.errors)
 
-	return render_template("test.html", form=form)
+
+	# test display stuff
+
+	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
+		#create a cursor
+		with conn.cursor() as curs:
+			curs.execute("""
+				SELECT name
+				FROM tests
+				WHERE id = %s
+				""",[testID])
+			testName = curs.fetchall()
+	return render_template("test.html", form=form, name=testName[0][0])
 
 
 @bp.route("/highscores")
