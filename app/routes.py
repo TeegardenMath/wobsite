@@ -1,6 +1,12 @@
 from flask import (Blueprint, render_template, redirect, url_for, session, request)
 import os, psycopg2, math
 from app.forms import create_test_form
+from wtforms.validators import (
+    InputRequired,
+    ValidationError,
+    Optional,
+    Email
+)
 
 #create a blueprint
 bp = Blueprint('main', __name__, url_prefix='/') 
@@ -45,11 +51,27 @@ def grade(scantron,testID):
 	score=[]
 	maxscore=0
 	while i < len(scantron):
+		#increment the maximum possible score
 		maxscore=maxscore+answerKey[i][2]
-		if scantron[i] == float(answerKey[i][0]):
-			score.append(answerKey[i][2])
+
+		#first, check if there's an answer at all
+		if(scantron[i]):
+
+			#handle numeric answers
+			if answerKey[i][1] == "numeric":
+				if float(scantron[i]) == float(answerKey[i][0]):
+					score.append(answerKey[i][2])
+				else:
+					score.append(0)
+
+			#handle string answers
+			if answerKey[i][1] == "string":
+				if str(scantron[i]) == str(answerKey[i][0]):
+					score.append(answerKey[i][2])
+				else:
+					score.append(0)
 		else:
-			score.append(0)
+			score.append(0) #no answer, no points
 		i+=1
 
 	return [score, maxscore]
@@ -92,6 +114,27 @@ def openTest(testID):
 # and returns a URL to display the results
 
 def gradeTest(form,testID):
+	#check what answer types to expect
+	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
+		#create a cursor
+		with conn.cursor() as curs:
+			#first we find the list of problem IDs for this test
+			curs.execute("""
+				SELECT problem_id
+				FROM problemtest
+				WHERE test_id=%s;
+				""",[testID])
+			problemIDs = curs.fetchall()
+
+			#now we find the problems for those IDs
+			curs.execute("""
+				SELECT answertype
+				FROM problems
+				WHERE id = ANY(%s);
+				""", (problemIDs,))
+			#fetch the records
+			typeList = curs.fetchall()
+
 	#compile a dictionary of all the answers
 	answerlist={}
 	scantron=[]
@@ -100,7 +143,20 @@ def gradeTest(form,testID):
 	problemkeylist2="'"+form.username.data+"\',\'"+form.email.data+"'"
 	for answer in form.answers:
 		problemkey = "answer"+str(problemcounter)
-		answerlist[problemkey]=answer.answer.data
+
+		#convert answers into appropriate format
+		thisAnswer=answer.answer.data
+		expectedType = typeList[problemcounter-1]
+		if thisAnswer:
+			if expectedType == "numeric":
+				thisAnswer=float(thisAnswer)
+			elif expectedType == "string":
+				thisAnswer=str(thisAnswer)
+			answerlist[problemkey]=thisAnswer
+		else:
+			answerlist[problemkey]=None
+
+
 		problemkeylist=problemkeylist+","
 		problemkeylist2=problemkeylist2+","
 		problemkeylist=problemkeylist+problemkey
@@ -157,13 +213,7 @@ def test(testID):
 	problemList = openTest(testID) # [problem, answertype, unit, points]
 
 	#set up the input form
-	form = create_test_form(len(problemList))
-
-	#write the problems on the input form
-	ii = 0
-	for field in form.answers:
-		field.label=problemList[ii][0]
-		ii+=1
+	form = create_test_form(problemList)
 
 	#form submission stuff
 	if form.validate_on_submit():
@@ -205,11 +255,19 @@ def highscores(testID):
 	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
 		#create a cursor
 		with conn.cursor() as curs:
-			curs.execute("""
-				SELECT username, grade
-				FROM submissions
-				ORDER BY grade DESC NULLS LAST;
-				""")
+			if testID == 0:
+				curs.execute("""
+					SELECT username, grade
+					FROM submissions
+					ORDER BY grade DESC NULLS LAST;
+					""")
+			else:
+				curs.execute("""
+					SELECT username, grade
+					FROM submissions
+					WHERE test = %s
+					ORDER BY grade DESC NULLS LAST;
+					""",[testID])
 			#fetch the records
 			rows = curs.fetchall()
 

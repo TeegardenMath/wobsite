@@ -96,13 +96,22 @@
 
           <div id="problemStatement">
             <p>{{ answer.label }}</p>
-            <div id="answerBlank">
-              <p>{{ answer['answer'] }}</p>
-              <p>
-                {% if units[loop.index-1] %}
-                  {{ units[loop.index-1] }}
+            <div>
+              <div id="answerBlank">
+                <p>{{ answer['answer'] }}</p>
+                <p>
+                  {% if units[loop.index-1] %}
+                    {{ units[loop.index-1] }}
+                  {% endif %}
+                </p>
+              </div>
+              <div class="errorZone">
+                {% if answer.errors %}
+                  {% for error in answer.errors %}
+                    {{answer.errors['answer'][0]}}<br>
+                  {% endfor %}
                 {% endif %}
-              </p>
+              </div>
             </div>
           </div>
 

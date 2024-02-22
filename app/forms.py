@@ -75,23 +75,50 @@ def profanityFilter(fieldname="Field"):
 
     return _profanityFilter
 
+def numericFilter(fieldname="Field"):
+    def _numericFilter(form,field):
+        answer=field.data
+        if not isfloat(answer):
+            raise ValidationError("Please submit a numeric answer.")
+    return _numericFilter
+
+#check for floats
+def isfloat(num):
+    try:
+        float(num)
+        return True
+    except ValueError:
+        return False
+
 
 #this is the basic format for each question's answer field
 class AnswerForm(FlaskForm):
     class Meta:
         csrf = False
-    answer = DecimalField('Answer', validators=[Optional()])
+    answer = StringField('Answer')
 
-def create_test_form(problemCount):
+def create_test_form(problemList): # problemList = [problem, answertype, unit, points]
+    problemCount=len(problemList)
     class TestForm(FlaskForm):
         username = StringField('Username', validators=[InputRequired(),length(min=1,max=50,fieldname="Username"),forbiddenChars("Username"),profanityFilter("Username")])
         email = StringField('Email', validators=[InputRequired(),Email()])
-        answer1 = DecimalField('Answer', validators=[Optional()])
-        answer2 = DecimalField('Answer', validators=[Optional()])
-        answer3 = DecimalField('Answer', validators=[Optional()])
-        answer4 = DecimalField('Answer', validators=[Optional()])
-        answer5 = DecimalField('Answer', validators=[Optional()])
-        answer6 = DecimalField('Answer', validators=[Optional()])
         answers = FieldList(FormField(AnswerForm),min_entries=problemCount) 
         submit = SubmitField('Submit answers')
-    return TestForm()
+
+    specificForm = TestForm()
+
+    ii=0
+    for field in specificForm.answers:
+        field.label=problemList[ii][0]
+        if problemList[ii][1] == "numeric":
+            field.answer.validators=[Optional(),numericFilter()]
+
+        ii+=1
+
+    return specificForm
+
+
+
+
+
+
