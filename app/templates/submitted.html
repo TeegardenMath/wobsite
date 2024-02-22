@@ -18,11 +18,10 @@
 	    <div class="twoColumn">
 		    {% for item in results %}
 		    	Problem {{ loop.index }}
-		    	{% if item == "1" %}
-		    		✓
-		    	{% endif %}
 		    	{% if item == "0" %}
 		    		✗
+		    	{% else %}
+		    		✓
 		    	{% endif %}
 		    	<br>
 		    {% endfor %}

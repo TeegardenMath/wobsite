@@ -12,6 +12,25 @@
       {% include 'navbar.html' %}
     </div>
 
+    <!-- navigation links for switching among competitions -->
+    <div class = "sidebar">
+    	<ul>
+    		{% if testID == 0 %}
+    			<li class="bold"><a href="/highscores">Overall</a></li>
+    		{% else %}
+    			<li><a href="/highscores">Overall</a></li>
+    		{% endif %}
+    		{% for test in tests %}
+    			{% if test[0] == testID %}
+    				<li class="bold"><a href="/highscores/{{test[0]}}">{{test[1]}}</a></li>
+    			{% else %}
+    				<li><a href="/highscores/{{test[0]}}">{{test[1]}}</a></li>
+    			{% endif %}
+    			
+    		{% endfor %}
+    	</ul>
+    </div>
+
 	<!--table for displaying submissions-->
 	<table id="highscores">
 		<thead>

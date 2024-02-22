@@ -11,6 +11,15 @@ body {
 	margin:0px;
 }
 
+.bold{
+	font-weight:bold;
+}
+
+#testBody {
+	display:grid;
+	grid-template-columns: 5rem 1fr 5rem;
+}
+
 
 /* hide the adjustment arrows on input fields */
 input::-webkit-outer-spin-button,
@@ -23,6 +32,8 @@ input[type=number] {
 }
 /* done hiding arrows */
 
+
+/* header navigation bar */
 #navbar {
 	text-align: center;
 	background-color: rgba(133,196,40,0.5);
@@ -36,24 +47,37 @@ input[type=number] {
 	font-family: "latinModern", "Times New Roman";
 	text-decoration: none;
 }
+/* end header bar */
 
-#problemsBlock{
-	text-align: center;
-	width:100%;
-}
 
-#personalInfo{
-	z-index:5;
-	background-color: rgba(133,196,40,1);
+/* navigational sidebar */
+
+.sidebar{
+	background-color: rgba(133,196,40,0.5);
+	width:fit-content;
+	max-width: 300px;
+	min-width: 100px;
+	margin:10px;
 	border:2px solid rgb(133,196,40);
-	padding:10px;
-	max-width: 200px;
-	position:sticky;
-	top:10px;
-	float:left;
-	margin:10px 10px;
-	display:block;
+	padding:10px 20px;
+	border-radius: 6px;
+	float: left;
 }
+
+.sidebar ul{
+	list-style: none;
+	padding:0px;
+}
+
+.sidebar ul li{
+	padding:5px 0px;
+}
+
+
+/* end navigational sidebar */
+
+
+
 
 #personalInfoHoverable{
 	position:absolute;
@@ -69,15 +93,6 @@ input[type=number] {
 	font-size:0.75em;
 }
 
-.problem {
-	background-color: rgba(28,116,188,0.25);
-	max-width: 750px;
-	border: 2px solid rgb(28,116,188);
-	padding:0px 20px 20px 20px;
-	border-radius:5px;
-	text-align: center;
-	margin:10px auto;
-}
 
 #results{
 	background-color: rgba(28,116,188,0.25);
@@ -91,15 +106,6 @@ input[type=number] {
 
 .twoColumn{
 	columns:2;
-}
-
-h2 {
-	color:rgb(28,116,188);
-}
-
-.problem h2{
-	float: left;
-	position:absolute;
 }
 
 footer {
@@ -143,6 +149,7 @@ table, th, td {
 	text-align: center;
 }
 
+
 .hoverable {
   position: relative;
   display: inline-block;
@@ -168,4 +175,71 @@ table, th, td {
   visibility: visible;
 }
 
+
+
+
+
+/* problem formatting */
+#problemsBlock{
+	text-align: center;
+	width:100%;
+}
+
+.problem {
+	background-color: rgba(28,116,188,0.25);
+	max-width: 750px;
+	border: 2px solid rgb(28,116,188);
+	padding:0px 20px 10px 20px;
+	border-radius:5px;
+	text-align: center;
+	margin:10px auto;
+	display:grid;
+	grid-template-columns: 100px 1fr 80px;
+}
+
+#points{
+	max-width:80px;
+	float: right;
+	color:rgb(28,116,188);
+}
+
+#problemNumber{
+	max-width:100px;
+	float:left;
+	position:absolute;
+	color:rgb(28,116,188);
+}
+
+#problemStatement{
+
+}
+
+#answerBlank{
+
+	display:inline-flex;
+	align-items: center;
+}
+
+#answerBlank p{
+	padding:0px 5px;
+	min-width: 30px;
+}
+/* end problem formatting */
+
+
+
+
+#personalInfo{
+	z-index:5;
+	background-color: rgba(133,196,40,1);
+	border:2px solid rgb(133,196,40);
+	padding:10px;
+	width:fit-content;
+	position:sticky;
+	top:10px;
+	float:left;
+	margin:10px 10px;
+	display:block;
+	height:fit-content;
+}
 

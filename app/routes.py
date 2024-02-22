@@ -13,6 +13,12 @@ CONNECTION_PARAMETERS = {
     "host": os.environ.get("DB_HOST"),
 }
 
+
+
+# this function takes a list of answers and a test ID
+# and returns a list of 0s and 1s
+# to indicate right or wrong answers
+
 def grade(scantron,testID):
 	#make a connection
 	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
@@ -37,14 +43,22 @@ def grade(scantron,testID):
 
 	i=0
 	score=[]
+	maxscore=0
 	while i < len(scantron):
+		maxscore=maxscore+answerKey[i][2]
 		if scantron[i] == float(answerKey[i][0]):
-			score.append(1)
+			score.append(answerKey[i][2])
 		else:
 			score.append(0)
 		i+=1
 
-	return score
+	return [score, maxscore]
+
+
+
+# this function takes a test ID
+# and returns a list of database rows
+# with information about the problems in that test
 
 def openTest(testID):
 	#make a connection
@@ -68,19 +82,16 @@ def openTest(testID):
 			#fetch the records
 			problemList = curs.fetchall()
 
-	#set up the input form
-	form = create_test_form(len(problemList))
 
-	#write the problems on the input form
-	ii = 0
-	for field in form.answers:
-		field.label=problemList[ii][0]
-		ii+=1
-
-	return form;
+	return problemList;
 	
 
-def gradeTest(form,testname):
+
+# this function takes a submitted form and the ID of the test
+# grades it, adds the submission to the database
+# and returns a URL to display the results
+
+def gradeTest(form,testID):
 	#compile a dictionary of all the answers
 	answerlist={}
 	scantron=[]
@@ -98,7 +109,9 @@ def gradeTest(form,testname):
 		problemcounter+=1
 
 	#this gives us a list of 0s and 1s
-	results = grade(scantron,testname)
+	scannedTest = grade(scantron,testID)
+	results=scannedTest[0]
+	maxScore=scannedTest[1]
 
 	#add them up for total score
 	score=sum(results)
@@ -107,8 +120,8 @@ def gradeTest(form,testname):
 	results = "".join(str(x) for x in results)
 
 	#format them for postgres queries
-	problemkeylist=problemkeylist+",grade"
-	problemkeylist2=problemkeylist2+","+str(score)
+	problemkeylist=problemkeylist+",grade, test"
+	problemkeylist2=problemkeylist2+","+str(score)+","+testID
 
 	#make a connection
 	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
@@ -120,15 +133,9 @@ def gradeTest(form,testname):
 			curs.execute(sqlstatement, answerlist)
 
 			#redirect on submission success
-			return url_for(".submitted",score=score,maxscore=problemcounter-1,results=results)
+			return url_for(".submitted",score=score,maxscore=maxScore,results=results)
 
-def extractTestList():
-	rawlist = os.listdir("app/problembank/problemlists")
-	processedList = []
-	for entry in rawlist:
-		splitEntry = entry.split(".")
-		processedList.append(splitEntry[0])
-	return processedList
+
 
 @bp.route("/")
 def main():
@@ -143,9 +150,20 @@ def main():
 	return render_template("main.html", testlist=testList)
 
 
+
+
 @bp.route("/test/<testID>", methods=['GET', 'POST'])
 def test(testID):
-	form = openTest(testID)
+	problemList = openTest(testID) # [problem, answertype, unit, points]
+
+	#set up the input form
+	form = create_test_form(len(problemList))
+
+	#write the problems on the input form
+	ii = 0
+	for field in form.answers:
+		field.label=problemList[ii][0]
+		ii+=1
 
 	#form submission stuff
 	if form.validate_on_submit():
@@ -155,8 +173,10 @@ def test(testID):
 		print(form.errors)
 
 
-	# test display stuff
+	### test display stuff ###
 
+
+	# fetch the test name
 	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
 		#create a cursor
 		with conn.cursor() as curs:
@@ -166,11 +186,21 @@ def test(testID):
 				WHERE id = %s
 				""",[testID])
 			testName = curs.fetchall()
-	return render_template("test.html", form=form, name=testName[0][0])
+
+	#lists of problem attributes
+	pointList=[]
+	unitList=[]
+	for problem in problemList:
+		pointList.append(problem[3])
+		unitList.append(problem[2])
 
 
-@bp.route("/highscores")
-def highscores():
+	##actually load that page
+	return render_template("test.html", form=form, name=testName[0][0], points=pointList, units=unitList)
+
+@bp.route("/highscores", defaults={'testID': 0})
+@bp.route("/highscores/<testID>")
+def highscores(testID):
 	#make a connection
 	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
 		#create a cursor
@@ -182,8 +212,15 @@ def highscores():
 				""")
 			#fetch the records
 			rows = curs.fetchall()
-			#return the records
-			return render_template("highscores.html", rows=rows[:10])
+
+			curs.execute("""
+				SELECT id, name
+				FROM tests
+				""")
+			testList = curs.fetchall()
+
+	return render_template("highscores.html", rows=rows[:10],tests=testList,testID=int(testID))
+
 
 @bp.route("/submitted")
 def submitted():

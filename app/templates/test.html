@@ -19,10 +19,12 @@
     <div id="navbar">
       {% include 'navbar.html' %}
     </div>
-      
-  	<header>
-  		<h1>{{ name }}</h1>
-  	</header>
+
+    <header>
+      <h1>{{ name }}</h1>
+    </header>
+
+    <div id="testBody">
 
       <!-- Here we have the box for entering personal info
           and submitting the form. -->
@@ -76,17 +78,57 @@
         </div>
       </div>
 
+
+
+
+
+      <!-- now the section with the problems! -->
+
       <div id="problemsBlock">
 
       {% for answer in form.answers %}
         <section class="problem">
-          <h2>Problem {{ loop.index }}</h2>
-          <p>{{ answer.label }}</p>
-          <p>{{ answer['answer'] }}</p>
+            <!--start individual problem-->
+
+          <div>
+            <h2 id="problemNumber">Problem {{ loop.index }}</h2>
+          </div>
+
+          <div id="problemStatement">
+            <p>{{ answer.label }}</p>
+            <div id="answerBlank">
+              <p>{{ answer['answer'] }}</p>
+              <p>
+                {% if units[loop.index-1] %}
+                  {{ units[loop.index-1] }}
+                {% endif %}
+              </p>
+            </div>
+          </div>
+
+          <div id="points">
+            <p>
+              {{points[loop.index-1]}}
+              {% if points[loop.index-1]>1 %}
+                points
+              {% else %}
+                point
+              {% endif %}
+            </p>
+          </div>
+
+          <!--end individual problem-->
         </section>
       {% endfor %}
 
+
+
       </div>
+
+
+    </div>
+
+
 
 
     </form>
