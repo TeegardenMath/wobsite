@@ -76,6 +76,59 @@ input[type=number] {
 
 /* end navigational sidebar */
 
+#resultsBody{
+	display:grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	align-items: flex-start;
+}
+
+#shareResults{
+	background-color: rgba(133,196,40,0.5);
+	width:fit-content;
+	max-width: 300px;
+	min-width: 100px;
+	margin:10px;
+	border:2px solid rgb(133,196,40);
+	padding:10px 20px 20px 20px;
+	border-radius: 6px;
+}
+
+#sampleShare{
+	text-align:center;
+	display:flex;
+	flex-direction: column;
+}
+
+#buttonBar{
+	display:flex;
+}
+
+#shareResults img{
+	margin:10px auto;
+	display:block;
+}
+
+#codeSample {
+	font-size: 0.7em;
+	width: 150px;
+	margin:0px auto 5px auto;
+}
+
+#copyButton{
+	max-width: 100px;
+	margin: 0px auto;
+	background-color:rgba(28,116,188,0);
+}
+
+#results{
+	background-color: rgba(28,116,188,0.25);
+	max-width: 300px;
+	border: 2px solid rgb(28,116,188);
+	padding:0px 20px 20px 20px;
+	border-radius:5px;
+	text-align: center;
+	margin:10px;
+}
 
 
 
@@ -94,15 +147,6 @@ input[type=number] {
 }
 
 
-#results{
-	background-color: rgba(28,116,188,0.25);
-	max-width: 300px;
-	border: 2px solid rgb(28,116,188);
-	padding:0px 20px 20px 20px;
-	border-radius:5px;
-	text-align: center;
-	margin:10px auto;
-}
 
 .twoColumn{
 	columns:2;
@@ -242,4 +286,9 @@ table, th, td {
 	display:block;
 	height:fit-content;
 }
+
+
+
+
+
 

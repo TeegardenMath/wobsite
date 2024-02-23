@@ -12,21 +12,71 @@
       {% include 'navbar.html' %}
     </div>
 
-    <div id="results">
-	    <h2>{{congrats}}!</h2>
-	    <h3>{{score}} out of {{maxscore}}</h3>
-	    <div class="twoColumn">
-		    {% for item in results %}
-		    	Problem {{ loop.index }}
-		    	{% if item == "0" %}
-		    		✗
-		    	{% else %}
-		    		✓
-		    	{% endif %}
-		    	<br>
-		    {% endfor %}
+    <div id="resultsBody">
+
+
+    	<div></div>
+
+	    <div id="results">
+		    <h2>{{congrats}}!</h2>
+		    <h3>{{score}} out of {{maxscore}}</h3>
+		    <div class="twoColumn">
+			    {% for item in results %}
+			    	Problem {{ loop.index }}
+			    	{% if item == "0" %}
+			    		✗
+			    	{% else %}
+			    		✓
+			    	{% endif %}
+			    	<br>
+			    {% endfor %}
+			</div>
 		</div>
+
+		<div id="shareResults">
+			<h2>Share your results!</h2>
+			<div id="sampleShare">
+				<img src="{{ url_for('static', filename='images/chicken.jpg') }}" width="100" />
+				<p>GOOD JOB</p>
+				<textarea id="codeSample">code code code blah blah blah going on and one and stuff and talking and doing code</textarea>
+				<div id="buttonBar">
+					<button id="copyButton" onclick="copyText()">
+						<svg viewBox="0 0 320 320" width="20">
+						  <g transform="translate(0,35)">
+						    <rect
+						       width="160"
+						       height="160"
+						       x="100"
+						       y="90"
+						       style="fill:#ffffff;stroke:#000000;stroke-width:32" />
+						    <rect
+						       width="160"
+						       height="160"
+						       x="50"
+						       y="20"
+						       style="fill:#ffffff;stroke:#000000;stroke-width:32" />
+						  </g>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</div>
+
+
+
 	</div>
+
+
+	<!-- this handles copy-to-clipboard functions -->
+	<script type="text/javascript"> 
+		function copyText(){
+	  		var copyText = document.getElementById("codeSample");
+	  		copyText.select();
+	  		copyText.setSelectionRange(0, 99999); // For mobile devices
+	  		navigator.clipboard.writeText(copyText.value);
+  		}
+	</script>
+
 
 </body>
 </html>
