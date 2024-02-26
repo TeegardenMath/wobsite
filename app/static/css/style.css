@@ -97,10 +97,29 @@ input[type=number] {
 	text-align:center;
 	display:flex;
 	flex-direction: column;
+	border:3px double rgb(133,196,40);
+	width:fit-content;
+	margin:5px auto 10px auto;
+	padding:3px 8px;
+	font-size: 0.8em;
 }
+
+#sampleTextBlock{
+	margin:5px auto;
+}
+
+#sampleTextBlock p{
+	max-width: 150px;
+	margin:0px auto;
+	width:fit-content;
+}
+
 
 #buttonBar{
 	display:flex;
+	flex-direction: row;
+	width:fit-content;
+	margin: 0px auto;
 }
 
 #shareResults img{
@@ -111,12 +130,13 @@ input[type=number] {
 #codeSample {
 	font-size: 0.7em;
 	width: 150px;
-	margin:0px auto 5px auto;
+	margin:5px auto 10px auto;
+	display:block;
 }
 
-#copyButton{
-	max-width: 100px;
-	margin: 0px auto;
+.barButton{
+	width: fit-content;
+	margin: 0px;
 	background-color:rgba(28,116,188,0);
 }
 
@@ -150,6 +170,7 @@ input[type=number] {
 
 .twoColumn{
 	columns:2;
+	padding-bottom: 1em;
 }
 
 footer {

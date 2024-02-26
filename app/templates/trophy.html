@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{{score}} out of {{maxscore}} on {{testname}}!</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+	<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+	<meta property="og:image" content="{{ url_for('static', filename='images/chicken.jpg') }}">
+	<meta property="og:title" content="I got a {{score}} out of {{maxscore}} on {{testname}}! Can you do better?">
+</head>
+<body>
+	<div id="navbar">
+      {% include 'navbar.html' %}
+    </div>
+
+    <div id="shareResults">
+    	{% include 'share.html' %}
+	</div>
+</body>
+</html>

@@ -189,7 +189,7 @@ def gradeTest(form,testID):
 			curs.execute(sqlstatement, answerlist)
 
 			#redirect on submission success
-			return url_for(".submitted",score=score,maxscore=maxScore,results=results)
+			return url_for(".submitted",score=score,maxscore=maxScore,results=results,username=form.username.data,testID=testID)
 
 
 
@@ -285,10 +285,37 @@ def submitted():
 	score=int(request.args.get("score"))
 	maxscore=int(request.args.get("maxscore"))
 	results=list(request.args.get("results"))
+	username=str(request.args.get("username"))
+	testID=int(request.args.get("testID"))
 	roundedperten=math.floor(10*score/maxscore)
 	congratslist=["Oof","Oof","Oof","Oof","Better luck next time","Better luck next time","Not so bad","Not too shabby","Nicely done","Awesome job","Fantabulous"]
-	return render_template("submitted.html",score=score,maxscore=maxscore,congrats=congratslist[roundedperten],results=results)
+	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
+		#create a cursor
+		with conn.cursor() as curs:
+			curs.execute("""
+				SELECT name
+				FROM tests
+				WHERE id = %s
+				""",[testID])
+			testName = curs.fetchall()
+	return render_template("submitted.html",score=score,maxscore=maxscore,congrats=congratslist[roundedperten],results=results,username=username,testID=testID,testname=testName[0][0])
 
+@bp.route("/trophy")
+def trophy():
+	score=int(request.args.get("score"))
+	maxscore=int(request.args.get("maxscore"))
+	username=str(request.args.get("username"))
+	testID=int(request.args.get("testID"))
+	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
+		#create a cursor
+		with conn.cursor() as curs:
+			curs.execute("""
+				SELECT name
+				FROM tests
+				WHERE id = %s
+				""",[testID])
+			testName = curs.fetchall()
+	return render_template("trophy.html",score=score,maxscore=maxscore,username=username,testID=testID,testname=testName[0][0])
 
 
 
