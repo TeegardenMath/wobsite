@@ -82,36 +82,15 @@ input[type=number] {
 	align-items: flex-start;
 }
 
-#shareResults{
-	background-color: rgba(133,196,40,0.5);
-	width:fit-content;
-	max-width: 300px;
-	min-width: 100px;
-	margin:10px;
-	border:2px solid rgb(133,196,40);
-	padding:10px 20px 20px 20px;
-	border-radius: 6px;
-}
 
 #sampleShare{
 	text-align:center;
 	display:flex;
 	flex-direction: column;
-	border:3px double rgb(133,196,40);
 	width:fit-content;
 	margin:5px auto 10px auto;
 	padding:3px 8px;
 	font-size: 0.8em;
-}
-
-#sampleTextBlock{
-	margin:5px auto;
-}
-
-#sampleTextBlock p{
-	max-width: 150px;
-	margin:0px auto;
-	width:fit-content;
 }
 
 
@@ -122,10 +101,6 @@ input[type=number] {
 	margin: 0px auto;
 }
 
-#shareResults img{
-	margin:10px auto;
-	display:block;
-}
 
 #codeSample {
 	font-size: 0.7em;
@@ -137,6 +112,7 @@ input[type=number] {
 .barButton{
 	width: fit-content;
 	margin: 0px;
+	padding-top:5px;
 	background-color:rgba(28,116,188,0);
 }
 

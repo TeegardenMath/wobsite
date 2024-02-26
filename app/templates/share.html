@@ -1,9 +1,33 @@
 
+<style>
+	div {margin:5px auto;}
+	p{max-width: 150px;
+	margin:0px auto;
+	width:fit-content;}
+	#shareResults img{
+		margin:10px auto;
+		display:block;
+		border:1px solid rgb(133,196,40);
+	}
+	#shareResults{
+		background-color: rgba(133,196,40,0.5);
+		width:fit-content;
+		max-width: 300px;
+		min-width: 100px;
+		margin:10px;
+		border:2px solid rgb(133,196,40);
+		padding:10px 20px 20px 20px;
+		border-radius: 6px;
+	}
+</style>
+<div id="shareResults">
 	<p><b>{{testname}}</b></p>
 	<img src="{{ url_for('static', filename='images/chicken.jpg') }}" width="100" />
 	<div id="sampleTextBlock">
 		<p><b>{{username}}</b></p> 
 		<p>got a score of</p>
 		<p><b>{{score}} out of {{maxscore}}!</b></p>
+		<br>
+		<p><a href="test/{{testID}}">Can you do better?</a></p>
 	</div>
-
+</div>

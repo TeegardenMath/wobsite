@@ -8,14 +8,15 @@
 	<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
 	<meta property="og:image" content="{{ url_for('static', filename='images/chicken.jpg') }}">
 	<meta property="og:title" content="I got a {{score}} out of {{maxscore}} on {{testname}}! Can you do better?">
+	<meta name="twitter:card" content="{{ url_for('static', filename='images/chicken.jpg') }}">
+	<meta name="twitter:title" content="{{testname}}">
+	<meta name="twitter:description" content="I got a {{score}} out of {{maxscore}} on {{testname}}! Can you do better?">
 </head>
 <body>
 	<div id="navbar">
       {% include 'navbar.html' %}
     </div>
 
-    <div id="shareResults">
-    	{% include 'share.html' %}
-	</div>
+    {% include 'share.html' %}
 </body>
 </html>
