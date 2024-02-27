@@ -38,6 +38,9 @@
 				<th></th>
 				<th>Username</th>
 				<th>Score</th>
+				{% if testID == 0 %}
+    				<th>Test</th>
+    			{% endif %}
 			</tr>
 		</thead>
 		<tbody>
@@ -47,6 +50,9 @@
 				<td>{{ loop.index }}</td>
 				<td>{{ item[0] }}</td>
 				<td>{{ item[1] }}</td>
+				{% if testID == 0 %}
+    				<td>{{namekey[item[2]]}}</td>
+    			{% endif %}
 			</tr>
 			{% endfor %}	
 		</tbody>

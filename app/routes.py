@@ -176,8 +176,8 @@ def gradeTest(form,testID):
 	results = "".join(str(x) for x in results)
 
 	#format them for postgres queries
-	problemkeylist=problemkeylist+",grade, test"
-	problemkeylist2=problemkeylist2+","+str(score)+","+testID
+	problemkeylist=problemkeylist+",grade, test, maxscore"
+	problemkeylist2=problemkeylist2+","+str(score)+","+testID+","+str(maxScore)
 
 	#make a connection
 	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
@@ -257,10 +257,25 @@ def highscores(testID):
 		with conn.cursor() as curs:
 			if testID == 0:
 				curs.execute("""
-					SELECT username, grade
+					SELECT username, grade, test
 					FROM submissions
 					ORDER BY grade DESC NULLS LAST;
 					""")
+				rows = curs.fetchall()
+
+				testIDList=[]
+				for i in range (0,10):
+					testIDList.append(rows[i][2])
+
+				print (testIDList)
+				curs.execute("""
+					SELECT id,name
+					FROM tests
+					WHERE id = ANY(%s);
+					""", (testIDList,))
+
+				nameKey = curs.fetchall()
+				nameKey = dict(nameKey)
 			else:
 				curs.execute("""
 					SELECT username, grade
@@ -268,8 +283,11 @@ def highscores(testID):
 					WHERE test = %s
 					ORDER BY grade DESC NULLS LAST;
 					""",[testID])
+
+				rows = curs.fetchall()
+				nameKey=False
 			#fetch the records
-			rows = curs.fetchall()
+			
 
 			curs.execute("""
 				SELECT id, name
@@ -277,7 +295,7 @@ def highscores(testID):
 				""")
 			testList = curs.fetchall()
 
-	return render_template("highscores.html", rows=rows[:10],tests=testList,testID=int(testID))
+	return render_template("highscores.html", rows=rows[:10],tests=testList,testID=int(testID),namekey=nameKey)
 
 
 @bp.route("/submitted")

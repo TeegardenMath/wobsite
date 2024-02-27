@@ -171,11 +171,11 @@ table, th, td {
 }
 
 #highscores tr:nth-child(even) {
-	td:nth-child(2), td:nth-child(3) {background-color: rgba(28,116,188,0.25);}
+	td:nth-child(2), td:nth-child(3), td:nth-child(4) {background-color: rgba(28,116,188,0.25);}
 }
 
 #highscores tr:nth-child(odd) {
-	td:nth-child(2), td:nth-child(3) {background-color: rgba(133,196,40,0.25);}
+	td:nth-child(2), td:nth-child(3), td:nth-child(4) {background-color: rgba(133,196,40,0.25);}
 }
 
 #highscores td:nth-child(3) {
