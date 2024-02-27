@@ -11,13 +11,19 @@ body {
 	margin:0px;
 }
 
-.bold{
-	font-weight:bold;
+#problemsBlock p{
+	padding:0px;
+	margin:0px;
 }
 
-#testBody {
-	display:grid;
-	grid-template-columns: 5rem 1fr 5rem;
+.mainSection{
+	display:flex;
+	margin: 0px auto;
+	justify-content: space-between;
+}
+
+.bold{
+	font-weight:bold;
 }
 
 
@@ -40,6 +46,7 @@ input[type=number] {
 	width:100%;
 	border:2px solid rgb(133,196,40);
 	padding:10px;
+	margin-top:0px;
 }
 
 .navElement{
@@ -55,13 +62,11 @@ input[type=number] {
 .sidebar{
 	background-color: rgba(133,196,40,0.5);
 	width:fit-content;
-	max-width: 300px;
-	min-width: 100px;
 	margin:10px;
 	border:2px solid rgb(133,196,40);
 	padding:10px 20px;
 	border-radius: 6px;
-	float: left;
+	height:fit-content;
 }
 
 .sidebar ul{
@@ -73,15 +78,23 @@ input[type=number] {
 	padding:5px 0px;
 }
 
-
 /* end navigational sidebar */
 
-#resultsBody{
-	display:grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	align-items: flex-start;
+/* infobar */
+.infobar{
+	background-color: rgba(28,116,188,0.5);
+	width:fit-content;
+	max-width: 300px;
+	min-width: 100px;
+	margin:10px;
+	border:2px solid rgb(28,116,188);
+	padding:10px 20px;
+	border-radius: 6px;
+	float: right;
+	height: fit-content;
 }
 
+/* end infobar */
 
 #sampleShare{
 	text-align:center;
@@ -91,6 +104,11 @@ input[type=number] {
 	margin:5px auto 10px auto;
 	padding:3px 8px;
 	font-size: 0.8em;
+}
+
+#sharebar{
+	background-color: rgba(133,196,40,0.5);
+	border:2px solid rgb(133,196,40);
 }
 
 
@@ -124,6 +142,7 @@ input[type=number] {
 	border-radius:5px;
 	text-align: center;
 	margin:10px;
+	height: fit-content;
 }
 
 .collapser {
@@ -226,37 +245,49 @@ table, th, td {
 	border-radius:5px;
 	text-align: center;
 	margin:10px auto;
-	display:grid;
-	grid-template-columns: 100px 1fr 80px;
+	display:flex;
+	flex-direction: column;
 }
 
-#points{
+.points{
 	max-width:80px;
+	margin:5px auto 0px auto;
 	float: right;
 	color:rgb(28,116,188);
+	height:fit-content;
+	width: fit-content;
 }
 
-#problemNumber{
+.problemNumber{
 	max-width:100px;
 	float:left;
-	position:absolute;
 	color:rgb(28,116,188);
+	width:fit-content;
+	margin:5px auto 0px auto;
 }
 
-#problemStatement{
-
+.problemStatement{
+	margin:0px auto 20px auto;
 }
 
-#answerBlank{
-
+.answerArea{
 	display:inline-flex;
-	align-items: center;
+	margin:0px auto;
+	height:fit-content;
+
 }
 
-#answerBlank p{
-	padding:0px 5px;
-	min-width: 30px;
+.answerEntry{
+	height:fit-content;
 }
+
+.unitArea{
+	display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 5px;
+}
+
 /* end problem formatting */
 
 
@@ -274,6 +305,10 @@ table, th, td {
 	margin:10px 10px;
 	display:block;
 	height:fit-content;
+}
+
+#entryBlank{
+	display:inline-flex;
 }
 
 #trophyMain{

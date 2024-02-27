@@ -12,10 +12,11 @@
       {% include 'navbar.html' %}
     </div>
 
-    <div id="resultsBody">
+    <div class="mainSection">
 
-
-    	<div></div>
+    	<div class="sidebar">
+    		x
+    	</div>
 
 	    <div id="results">
 		    <h2>{{congrats}}!</h2>
@@ -34,7 +35,7 @@
 			<a href="test/{{testID}}">Try it again?</a>
 		</div>
 
-		<div id="shareResults">
+		<div class="infobar" id="sharebar">
 			<h2>Share your results!</h2>
 			<div id="sampleShare">
 				{% include 'share.html' %}

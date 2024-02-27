@@ -1,6 +1,6 @@
 
 <style>
-	div {margin:5px auto;}
+	.sharediv {margin:5px auto;}
 	p{max-width: 150px;
 	margin:0px auto;
 	width:fit-content;}
@@ -20,10 +20,10 @@
 		border-radius: 6px;
 	}
 </style>
-<div id="shareResults">
+<div id="shareResults" class="sharediv">
 	<p><b>{{testname}}</b></p>
 	<img src="{{ url_for('static', filename='images/chicken.jpg') }}" width="100" />
-	<div id="sampleTextBlock">
+	<div id="sampleTextBlock" class="sharediv">
 		<p><b>{{username}}</b></p> 
 		<p>got a score of</p>
 		<p><b>{{score}} out of {{maxscore}}!</b></p>

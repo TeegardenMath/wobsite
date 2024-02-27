@@ -11,58 +11,66 @@
 	<div id="navbar">
       {% include 'navbar.html' %}
     </div>
+	<div class="mainSection">
 
-    <!-- navigation links for switching among competitions -->
-    <div class = "sidebar">
-    	<ul>
-    		{% if testID == 0 %}
-    			<li class="bold"><a href="/highscores">Overall</a></li>
-    		{% else %}
-    			<li><a href="/highscores">Overall</a></li>
-    		{% endif %}
-    		{% for test in tests %}
-    			{% if test[0] == testID %}
-    				<li class="bold"><a href="/highscores/{{test[0]}}">{{test[1]}}</a></li>
-    			{% else %}
-    				<li><a href="/highscores/{{test[0]}}">{{test[1]}}</a></li>
-    			{% endif %}
-    			
-    		{% endfor %}
-    	</ul>
-    </div>
+	    <!-- navigation links for switching among competitions -->
+	    <div class = "sidebar">
+	    	<ul>
+	    		{% if testID == 0 %}
+	    			<li class="bold"><a href="/highscores">Overall</a></li>
+	    		{% else %}
+	    			<li><a href="/highscores">Overall</a></li>
+	    		{% endif %}
+	    		{% for test in tests %}
+	    			{% if test[0] == testID %}
+	    				<li class="bold"><a href="/highscores/{{test[0]}}">{{test[1]}}</a></li>
+	    			{% else %}
+	    				<li><a href="/highscores/{{test[0]}}">{{test[1]}}</a></li>
+	    			{% endif %}
+	    			
+	    		{% endfor %}
+	    	</ul>
+	    </div>
 
-	<!--table for displaying submissions-->
-	<table id="highscores">
-		<thead>
-			<tr>
-				<th></th>
-				<th>Username</th>
-				<th>Score</th>
-				{% if testID == 0 %}
-    				<th>Test</th>
-    			{% endif %}
-			</tr>
-		</thead>
-		<tbody>
-			{% for item in rows %}
-			<!-- loop here to create rows -->
-			<tr>
-				<td>{{ loop.index }}</td>
-				<td>{{ item[0] }}</td>
-				<td>
+		<!--table for displaying submissions-->
+		<table id="highscores">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Username</th>
+					<th>Score</th>
 					{% if testID == 0 %}
-						{{ scoreratiolist[loop.index-1] }}%
-					{% else %}
-						{{ item[1] }}
-					{% endif %}
-				</td>
-				{% if testID == 0 %}
-    				<td>{{namekey[item[2]]}}</td>
-    			{% endif %}
-			</tr>
-			{% endfor %}	
-		</tbody>
-	</table>
+	    				<th>Test</th>
+	    			{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in rows %}
+				<!-- loop here to create rows -->
+				<tr>
+					<td>{{ loop.index }}</td>
+					<td>{{ item[0] }}</td>
+					<td>
+						{% if testID == 0 %}
+							{{ scoreratiolist[loop.index-1] }}%
+						{% else %}
+							{{ item[1] }}
+						{% endif %}
+					</td>
+					{% if testID == 0 %}
+	    				<td>{{namekey[item[2]]}}</td>
+	    			{% endif %}
+				</tr>
+				{% endfor %}	
+			</tbody>
+		</table>
 
+
+		<!-- graph displaying score distribution -->
+
+		<div class="infobar">
+			x
+		</div>
+	</div>
 </body>
 </html>

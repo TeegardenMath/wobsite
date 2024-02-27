@@ -20,130 +20,136 @@
       {% include 'navbar.html' %}
     </div>
 
-    <div class="sidebar">
-        <button type="button" class="collapser">»</button>
-        <div id="infoContents" >
-          <!--Username entry box and error display-->
-          <p>{{form.username.label}}</p>
-          <div>
-              {{form.username()}}
-              <div class="hoverable">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-                  <path fill=transparent stroke=rgba(133,196,40,0.5) stroke-width="2" d="m10,1.3a8.6,8.6 0 1,1-0.1,0zM7,8a3,3 0 1,1 3,3v2m0,1v2"/>
-                </svg>
-                <span class="hovertext">For the public scoreboard.</span>
-              </div> 
-          </div>
-
-
-          <div class="errorZone">
-            {% if form.username.errors %}
-                {% for error in form.username.errors %}
-                  {{error}}<br>
-                {% endfor %}
-            {% endif %}
-          </div>
-
-          <!--Email entry box and error display-->
-          <p>{{form.email.label}}</p>
-          <div>
-              {{form.email()}}
-              <div class="hoverable">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-                  <path fill=transparent stroke=rgba(133,196,40,0.5) stroke-width="2" d="m10,1.3a8.6,8.6 0 1,1-0.1,0zM7,8a3,3 0 1,1 3,3v2m0,1v2"/>
-                </svg>
-                <span class="hovertext">Not publicly displayed.</span>
-              </div> 
-          </div>
-          
-          <div class="errorZone">
-          {% if form.email.errors %}
-              {% for error in form.email.errors %}
-                {{error}}<br>
-              {% endfor %}
-          {% endif %}
-          </div>
-
-          <!-- Submit button -->
-          <p>{{form.submit()}}</p> 
-        </div>
-      </div>
-
     <header>
       <h1>{{ name }}</h1>
     </header>
-
-    <div id="testBody">
-
-      <!-- Here we have the box for entering personal info
-          and submitting the form. -->
-
-      <div></div>
-
-
-
-
-
-      <!-- now the section with the problems! -->
-
-      <div id="problemsBlock">
-
-      {% for answer in form.answers %}
-        <section class="problem">
-            <!--start individual problem-->
-
-          <div>
-            <h2 id="problemNumber">Problem {{ loop.index }}</h2>
-          </div>
-
-          <div id="problemStatement">
-            <p>{{ answer.label }}</p>
-            <div>
-              <div id="answerBlank">
-                <p>{{ answer['answer'] }}</p>
-                <p>
-                  {% if units[loop.index-1] %}
-                    {{ units[loop.index-1] }}
-                  {% endif %}
-                </p>
-              </div>
-              <div class="errorZone">
-                {% if answer.errors %}
-                  {% for error in answer.errors %}
-                    {{answer.errors['answer'][0]}}<br>
-                  {% endfor %}
-                {% endif %}
-              </div>
+    <div class="mainSection">
+      <div class="sidebar">
+          <button type="button" class="collapser">»</button>
+          <div id="infoContents" >
+            <!--Username entry box and error display-->
+            <p>{{form.username.label}}</p>
+            <div id ="entryBlank">
+                {{form.username()}}
+                <div class="hoverable">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                    <path fill=transparent stroke=rgba(133,196,40,0.5) stroke-width="2" d="m10,1.3a8.6,8.6 0 1,1-0.1,0zM7,8a3,3 0 1,1 3,3v2m0,1v2"/>
+                  </svg>
+                  <span class="hovertext">For the public scoreboard.</span>
+                </div> 
             </div>
-          </div>
 
-          <div id="points">
-            <p>
-              {{points[loop.index-1]}}
-              {% if points[loop.index-1]>1 %}
-                points
-              {% else %}
-                point
+
+            <div class="errorZone">
+              {% if form.username.errors %}
+                  {% for error in form.username.errors %}
+                    {{error}}<br>
+                  {% endfor %}
               {% endif %}
-            </p>
+            </div>
+
+            <!--Email entry box and error display-->
+            <p>{{form.email.label}}</p>
+            <div id="entryBlank">
+                {{form.email()}}
+                <div class="hoverable">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                    <path fill=transparent stroke=rgba(133,196,40,0.5) stroke-width="2" d="m10,1.3a8.6,8.6 0 1,1-0.1,0zM7,8a3,3 0 1,1 3,3v2m0,1v2"/>
+                  </svg>
+                  <span class="hovertext">Not publicly displayed.</span>
+                </div> 
+            </div>
+            
+            <div class="errorZone">
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                  {{error}}<br>
+                {% endfor %}
+            {% endif %}
+            </div>
+
+            <!-- Submit button -->
+            <p>{{form.submit()}}</p> 
+          </div>
+        </div>
+
+
+        <!-- Here we have the box for entering personal info
+            and submitting the form. -->
+
+        <div></div>
+
+
+
+
+
+        <!-- now the section with the problems! -->
+
+        <div id="problemsBlock">
+
+        {% for answer in form.answers %}
+          <section class="problem">
+              <!--start individual problem-->
+
+              <!-- container for number and points -->
+            <div class="problemMetadata">
+              <!-- number -->
+              <div class="problemNumber">
+                <p>Problem {{ loop.index }}</p>
+              </div>
+              <!-- points -->
+              <div class="points">
+                  {{points[loop.index-1]}}
+                  {% if points[loop.index-1]>1 %}
+                    points
+                  {% else %}
+                    point
+                  {% endif %}
+              </div>
           </div>
 
-          <!--end individual problem-->
-        </section>
-      {% endfor %}
+              <!-- the problem statement -->
+            <div class="problemStatement">
+              <p>{{ answer.label }}</p>
+            </div>
+              
+              <!-- the answer blank , with units-->
+            <div class="answerArea">
+              <!-- answer blank itself -->
+              <div class="answerEntry">{{ answer['answer'] }}</div>
+              <!-- units, if any -->
+              {% if units[loop.index-1] %}
+                <div class="unitArea">
+                  {{ units[loop.index-1] }}
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- errors, if any -->
+            {% if answer.errors %}
+              <div class="errorZone">
+                {% for error in answer.errors %}
+                  {{answer.errors['answer'][0]}}<br>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <!--end individual problem-->
+          </section>
+        {% endfor %}
+
+        </div> 
 
 
+      </form>
 
+      <!-- rules info -->
+      <div class="infobar">
+        x
       </div>
 
 
-    </div>
-
-
-
-
-    </form>
-
+  </div>
 
     <script type="text/javascript"> /* this gives collapsible elements their behavior*/
 
