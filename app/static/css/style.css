@@ -126,14 +126,6 @@ input[type=number] {
 	margin:10px;
 }
 
-
-
-#personalInfoHoverable{
-	position:absolute;
-	right:20px;
-	padding:1px;
-}
-
 .collapser {
 	float:right;
 }
@@ -284,7 +276,10 @@ table, th, td {
 	height:fit-content;
 }
 
-
+#trophyMain{
+	margin:0px auto;
+	width:fit-content;
+}
 
 
 
