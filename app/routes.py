@@ -251,21 +251,32 @@ def test(testID):
 @bp.route("/highscores", defaults={'testID': 0})
 @bp.route("/highscores/<testID>")
 def highscores(testID):
+	scoreRatioList=[]
 	#make a connection
 	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
 		#create a cursor
 		with conn.cursor() as curs:
+
+			# first we handle the overall list
 			if testID == 0:
+
+				# retrieve the list of submissions
 				curs.execute("""
-					SELECT username, grade, test
+					SELECT username, grade, test, maxscore
 					FROM submissions
 					ORDER BY grade DESC NULLS LAST;
 					""")
 				rows = curs.fetchall()
 
+				# isolate a list of the test IDs
+				# then use it to calculate percentage scores
 				testIDList=[]
 				for i in range (0,10):
 					testIDList.append(rows[i][2])
+					scoreRatio=rows[i][1]/rows[i][3]
+					scoreRatio=scoreRatio*100
+					scoreRatio=math.floor(scoreRatio)
+					scoreRatioList.append(scoreRatio)
 
 				print (testIDList)
 				curs.execute("""
@@ -295,7 +306,12 @@ def highscores(testID):
 				""")
 			testList = curs.fetchall()
 
-	return render_template("highscores.html", rows=rows[:10],tests=testList,testID=int(testID),namekey=nameKey)
+	return render_template("highscores.html", 
+		rows=rows[:10],
+		tests=testList,
+		testID=int(testID),
+		namekey=nameKey,
+		scoreratiolist=scoreRatioList)
 
 
 @bp.route("/submitted")

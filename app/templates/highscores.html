@@ -49,7 +49,13 @@
 			<tr>
 				<td>{{ loop.index }}</td>
 				<td>{{ item[0] }}</td>
-				<td>{{ item[1] }}</td>
+				<td>
+					{% if testID == 0 %}
+						{{ scoreratiolist[loop.index-1] }}%
+					{% else %}
+						{{ item[1] }}
+					{% endif %}
+				</td>
 				{% if testID == 0 %}
     				<td>{{namekey[item[2]]}}</td>
     			{% endif %}
