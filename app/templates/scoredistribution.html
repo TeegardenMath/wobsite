@@ -1,0 +1,30 @@
+	<script>
+		google.charts.load('current',{packages:['corechart']});
+		google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+
+		// Set Data
+		const data = google.visualization.arrayToDataTable({{graphdata|safe}});
+
+		// Set Options
+		const options = {
+		  backgroundColor: 'none',
+		  colors: ['rgb(28,116,188)'],
+		  legend: {position:'none'},
+		  vAxis: {
+		  	gridlines: {count: 0},
+		  	textPosition: 'none'
+		  },
+		  histogram:{
+		  	hideBucketItems:true,
+		  	bucketSize:1
+		  }
+		};
+
+		// Draw
+		const chart = new google.visualization.Histogram(document.getElementById('myChart'));
+		chart.draw(data, options);
+
+		}
+	</script>

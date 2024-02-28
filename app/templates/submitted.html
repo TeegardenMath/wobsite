@@ -6,6 +6,7 @@
 	<title>Answers submitted!</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 	<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+	<script src="https://www.gstatic.com/charts/loader.js"></script> 
 </head>
 <body>
 	<div id="navbar">
@@ -14,13 +15,15 @@
 
     <div class="mainSection">
 
-    	<div class="sidebar">
-    		x
+    	<div class="sidebar" style="min-width:fit-content;">
+    		<h2>Score Distribution</h2>
+			 <div id="myChart" style="width:100%; height:400px"></div> 
     	</div>
 
 	    <div id="results">
 		    <h2>{{congrats}}!</h2>
 		    <h3>{{score}} out of {{maxscore}}</h3>
+		    <img src="{{ url_for('static', filename='images/chicken.jpg') }}" width="100" />
 		    <div class="twoColumn">
 			    {% for item in results %}
 			    	Problem {{ loop.index }}
@@ -88,7 +91,12 @@
 
 
 
+
 	</div>
+	<!-- end of main body content -->
+
+	<!-- script for drawing graph -->
+	{% include 'scoredistribution.html' %}
 
 
 	<!-- this handles copy-to-clipboard functions -->

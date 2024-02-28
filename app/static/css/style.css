@@ -82,12 +82,12 @@ input[type=number] {
 
 /* infobar */
 .infobar{
-	background-color: rgba(28,116,188,0.5);
+	background-color: rgba(133,196,40,0.5);
 	width:fit-content;
-	max-width: 300px;
+	max-width: 400px;
 	min-width: 100px;
 	margin:10px;
-	border:2px solid rgb(28,116,188);
+	border:2px solid rgb(133,196,40);
 	padding:10px 20px;
 	border-radius: 6px;
 	float: right;
@@ -105,12 +105,6 @@ input[type=number] {
 	padding:3px 8px;
 	font-size: 0.8em;
 }
-
-#sharebar{
-	background-color: rgba(133,196,40,0.5);
-	border:2px solid rgb(133,196,40);
-}
-
 
 #buttonBar{
 	display:flex;
@@ -143,6 +137,10 @@ input[type=number] {
 	text-align: center;
 	margin:10px;
 	height: fit-content;
+}
+
+#results img{
+	margin-bottom: 15px;
 }
 
 .collapser {

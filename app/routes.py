@@ -287,7 +287,9 @@ def highscores(testID):
 
 				nameKey = curs.fetchall()
 				nameKey = dict(nameKey)
+				graphdata=False
 			else:
+				# now we're doing individual tests
 				curs.execute("""
 					SELECT username, grade
 					FROM submissions
@@ -297,6 +299,11 @@ def highscores(testID):
 
 				rows = curs.fetchall()
 				nameKey=False
+
+				#format for graph display
+				graphdata=[["username","grade"]]
+				for row in rows:
+					graphdata.append([row[0],row[1]])
 			#fetch the records
 			
 
@@ -306,12 +313,15 @@ def highscores(testID):
 				""")
 			testList = curs.fetchall()
 
+	print(graphdata)
+
 	return render_template("highscores.html", 
 		rows=rows[:10],
 		tests=testList,
 		testID=int(testID),
 		namekey=nameKey,
-		scoreratiolist=scoreRatioList)
+		scoreratiolist=scoreRatioList,
+		graphdata=graphdata)
 
 
 @bp.route("/submitted")
@@ -332,7 +342,22 @@ def submitted():
 				WHERE id = %s
 				""",[testID])
 			testName = curs.fetchall()
-	return render_template("submitted.html",score=score,maxscore=maxscore,congrats=congratslist[roundedperten],results=results,username=username,testID=testID,testname=testName[0][0])
+
+				# fetch results from test for score distribution
+			curs.execute("""
+				SELECT username, grade
+				FROM submissions
+				WHERE test = %s
+				ORDER BY grade DESC NULLS LAST;
+				""",[testID])
+			rows = curs.fetchall()
+
+	#format for graph display
+	graphdata=[["username","grade"]]
+	for row in rows:
+		graphdata.append([row[0],row[1]])
+
+	return render_template("submitted.html",score=score,maxscore=maxscore,congrats=congratslist[roundedperten],results=results,username=username,testID=testID,testname=testName[0][0],graphdata=graphdata)
 
 @bp.route("/trophy")
 def trophy():
@@ -349,6 +374,7 @@ def trophy():
 				WHERE id = %s
 				""",[testID])
 			testName = curs.fetchall()
+
 	return render_template("trophy.html",score=score,maxscore=maxscore,username=username,testID=testID,testname=testName[0][0])
 
 
