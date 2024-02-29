@@ -230,7 +230,7 @@ def test(testID):
 	print("the ID is ",theID)
 
 	if len(theID) == 0:
-		return "lol no"
+		return render_template("notest.html")
 
 
 	#now, get underway
