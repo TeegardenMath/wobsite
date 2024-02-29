@@ -199,13 +199,13 @@ def main():
 		#create a cursor
 		with conn.cursor() as curs:
 			curs.execute("""
-				SELECT id, name, testgroup_id
+				SELECT id, name, testgroup_id, visible
 				FROM tests
 				""")
 			testList = curs.fetchall()
 
 			curs.execute("""
-				SELECT id, name
+				SELECT id, name, visible
 				FROM testgroups
 				""")
 			testgroups = curs.fetchall()

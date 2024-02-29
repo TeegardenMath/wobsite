@@ -15,20 +15,24 @@
   <div class="mainSection">
 
     {% for testgroup in testgroups %}
-      <div class="testGroup">
-        <div class="groupTitle">{{testgroup[1]}}</div>
-        <table class="standardTable testTable">
-          <tbody>
-            {% for test in testlist %}
-              {% if test[2] == testgroup[0] %}
-                <tr>
-                  <td><a href="/test/{{test[0]}}">{{test[1]}}</a></td>
-                </tr>
-              {% endif %}
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+    {% if testgroup[2] %} <!-- if it's visible -->
+        <div class="testGroup">
+          <div class="groupTitle">{{testgroup[1]}}</div>
+          <table class="standardTable testTable">
+            <tbody>
+              {% for test in testlist %}
+                {% if test[3] %} <!-- if it's visible -->
+                  {% if test[2] == testgroup[0] %} <!-- if it's in this group -->
+                    <tr>
+                      <td><a href="/test/{{test[0]}}">{{test[1]}}</a></td>
+                    </tr>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
     {% endfor %}
     
 

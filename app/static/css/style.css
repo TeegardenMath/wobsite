@@ -362,11 +362,13 @@ table, th, td {
 .groupTitle{
 	width:fit-content;
 	margin:5px auto;
+	padding:0px 10px;
 }
 
 .testTable{
 	padding:0px 0px 0px 0px;
   border-collapse: collapse;
+  width:100%;
 }
 
 
