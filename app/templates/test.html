@@ -154,10 +154,19 @@
           <div id="testLength">
             {{points|length}} problems
           </div>
-          <div class="hoverable">
-             {% include 'nocalculators.svg' %}
-              <span class="hovertext hoverTopLeft">No calculators are allowed on this test.</span>
-          </div> 
+
+          <!-- display calculator icon -->
+          {% if calculators %}
+            <div class="hoverable">
+               {% include 'yescalculators.svg' %}
+                <span class="hovertext hoverTopLeft">Calculators are allowed on this test.</span>
+            </div> 
+          {% else %}
+            <div class="hoverable">
+               {% include 'nocalculators.svg' %}
+                <span class="hovertext hoverTopLeft">No calculators are allowed on this test.</span>
+            </div> 
+          {% endif %}
 
         </div>
         <!-- end test metadata -->

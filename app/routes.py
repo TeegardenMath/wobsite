@@ -230,13 +230,14 @@ def test(testID):
 		with conn.cursor() as curs:
 			# fetch the test name
 			curs.execute("""
-				SELECT name, rules_id
+				SELECT name, rules_id, calculators
 				FROM tests
 				WHERE id = %s
 				""",[testID])
 			testInfo = curs.fetchall()
 			testName=testInfo[0][0]
 			rulesID=testInfo[0][1]
+			calculatorsAllowed=testInfo[0][2]
 
 			#and the test rules
 			if rulesID:
@@ -264,7 +265,7 @@ def test(testID):
 
 
 	##actually load that page
-	return render_template("test.html", form=form, name=testName, points=pointList, units=unitList, images=imageList, rules=testRules)
+	return render_template("test.html", form=form, name=testName, points=pointList, units=unitList, images=imageList, rules=testRules, calculators=calculatorsAllowed)
 
 @bp.route("/highscores", defaults={'testID': 0})
 @bp.route("/highscores/<testID>")

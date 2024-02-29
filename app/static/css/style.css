@@ -338,20 +338,6 @@ table, th, td {
 }
 
 
-#personalInfo{
-	z-index:5;
-	background-color: rgba(133,196,40,1);
-	border:2px solid rgb(133,196,40);
-	padding:10px;
-	width:fit-content;
-	position:sticky;
-	top:10px;
-	float:left;
-	margin:10px 10px;
-	display:block;
-	height:fit-content;
-}
-
 #entryBlank{
 	display:inline-flex;
 }
