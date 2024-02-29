@@ -199,11 +199,18 @@ def main():
 		#create a cursor
 		with conn.cursor() as curs:
 			curs.execute("""
-				SELECT id, name
+				SELECT id, name, testgroup_id
 				FROM tests
 				""")
 			testList = curs.fetchall()
-	return render_template("main.html", testlist=testList)
+
+			curs.execute("""
+				SELECT id, name
+				FROM testgroups
+				""")
+			testgroups = curs.fetchall()
+
+	return render_template("main.html", testlist=testList, testgroups=testgroups)
 
 
 

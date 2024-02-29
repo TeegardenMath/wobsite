@@ -20,6 +20,8 @@ body {
 	display:flex;
 	margin: 0px auto;
 	justify-content: center;
+	padding-bottom:25px;
+	padding-top:10px;
 }
 
 .bold{
@@ -347,6 +349,24 @@ table, th, td {
 	width:fit-content;
 }
 
+.testGroup{
+	border:2px solid rgb(28,116,188);
+	margin:10px;
+	border-radius:5px;
+	overflow:hidden;
+	height: fit-content;
+}
+
+.groupTitle{
+	width:fit-content;
+	margin:5px auto;
+	font-weight:bold;
+}
+
+.testTable{
+	padding:0px 0px 0px 0px;
+  border-collapse: collapse;
+}
 
 
 
