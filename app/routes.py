@@ -217,6 +217,23 @@ def main():
 
 @bp.route("/test/<testID>", methods=['GET', 'POST'])
 def test(testID):
+	#first, check if there's even a test at that ID
+	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
+		with conn.cursor() as curs:
+			curs.execute("""
+				SELECT id
+				FROM tests
+				WHERE id=%s;
+				""",[testID])
+			theID = curs.fetchall()
+
+	print("the ID is ",theID)
+
+	if len(theID) == 0:
+		return "lol no"
+
+
+	#now, get underway
 	problemList = openTest(testID) # [problem, answertype, unit, points, image]
 
 	#set up the input form
