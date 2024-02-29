@@ -28,7 +28,7 @@
     {{form.csrf_token}}
 
       <!-- left sidebar: login box -->
-      <div class="sidebar">
+      <div class="sidebar personalInfo">
           <button type="button" class="collapser">»</button>
           <div id="infoContents" >
             <!--Username entry box and error display-->
@@ -163,10 +163,11 @@
         <!-- end test metadata -->
 
         <!-- begin test rules -->
-
-        <div id="rules">
-          Lorem ipsum text text text goes here writing things and words and stuff about math and how to do math and things like that 
-        </div>
+        {% if rules %}
+          <div id="rules">
+            {{ rules|safe }}
+          </div>
+        {% endif %}
 
         <!-- end test rules -->
       </div>

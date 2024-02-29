@@ -225,17 +225,30 @@ def test(testID):
 
 	### test display stuff ###
 
-
-	# fetch the test name
 	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
 		#create a cursor
 		with conn.cursor() as curs:
+			# fetch the test name
 			curs.execute("""
-				SELECT name
+				SELECT name, rules_id
 				FROM tests
 				WHERE id = %s
 				""",[testID])
-			testName = curs.fetchall()
+			testInfo = curs.fetchall()
+			testName=testInfo[0][0]
+			rulesID=testInfo[0][1]
+
+			#and the test rules
+			if rulesID:
+				curs.execute("""
+					SELECT rules_text
+					FROM rules
+					WHERE id = %s
+					""",[rulesID])
+				testRules = curs.fetchall()[0][0]
+			else:
+				testRules=False
+
 
 	#lists of problem attributes
 	pointList=[]
@@ -251,7 +264,7 @@ def test(testID):
 
 
 	##actually load that page
-	return render_template("test.html", form=form, name=testName[0][0], points=pointList, units=unitList, images=imageList)
+	return render_template("test.html", form=form, name=testName, points=pointList, units=unitList, images=imageList, rules=testRules)
 
 @bp.route("/highscores", defaults={'testID': 0})
 @bp.route("/highscores/<testID>")

@@ -332,6 +332,11 @@ table, th, td {
 	justify-content: space-between;
 }
 
+.personalInfo{
+	position:sticky;
+	top:10px;
+}
+
 
 #personalInfo{
 	z-index:5;
