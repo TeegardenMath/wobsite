@@ -182,11 +182,11 @@ table, th, td {
 }
 
 .standardTable tr:nth-child(even){
-	background-color: rgba(28,116,188,0.25);
+	background-color: rgba(198.25,220.25,238.25,1);
 }
 
 .standardTable tr:nth-child(odd){
-	background-color: rgba(133,196,40,0.25);
+	background-color: rgba(224.5,240.25,201.25,1);
 }
 
 #highscores tr:nth-child(even) {
@@ -355,12 +355,13 @@ table, th, td {
 	border-radius:5px;
 	overflow:hidden;
 	height: fit-content;
+	background-color: rgb(28,116,188);
+	color:white;
 }
 
 .groupTitle{
 	width:fit-content;
 	margin:5px auto;
-	font-weight:bold;
 }
 
 .testTable{
