@@ -221,15 +221,13 @@ def test(testID):
 	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
 		with conn.cursor() as curs:
 			curs.execute("""
-				SELECT id
+				SELECT visible
 				FROM tests
 				WHERE id=%s;
 				""",[testID])
-			theID = curs.fetchall()
+			isVisible = curs.fetchall()
 
-	print("the ID is ",theID)
-
-	if len(theID) == 0:
+	if len(isVisible) == 0 or not isVisible[0][0]:
 		return render_template("notest.html")
 
 
