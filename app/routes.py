@@ -97,7 +97,7 @@ def openTest(testID):
 
 			#now we find the problems for those IDs
 			curs.execute("""
-				SELECT problem, answertype, unit, points
+				SELECT problem, answertype, unit, points, image
 				FROM problems
 				WHERE id = ANY(%s);
 				""", (problemIDs,))
@@ -210,7 +210,7 @@ def main():
 
 @bp.route("/test/<testID>", methods=['GET', 'POST'])
 def test(testID):
-	problemList = openTest(testID) # [problem, answertype, unit, points]
+	problemList = openTest(testID) # [problem, answertype, unit, points, image]
 
 	#set up the input form
 	form = create_test_form(problemList)
@@ -240,13 +240,18 @@ def test(testID):
 	#lists of problem attributes
 	pointList=[]
 	unitList=[]
+	imageList=[]
 	for problem in problemList:
 		pointList.append(problem[3])
 		unitList.append(problem[2])
+		if problem[4]:
+			imageList.append(problem[4])
+		else:
+			imageList.append(False)
 
 
 	##actually load that page
-	return render_template("test.html", form=form, name=testName[0][0], points=pointList, units=unitList)
+	return render_template("test.html", form=form, name=testName[0][0], points=pointList, units=unitList, images=imageList)
 
 @bp.route("/highscores", defaults={'testID': 0})
 @bp.route("/highscores/<testID>")

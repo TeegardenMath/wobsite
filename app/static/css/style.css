@@ -19,7 +19,7 @@ body {
 .mainSection{
 	display:flex;
 	margin: 0px auto;
-	justify-content: space-between;
+	justify-content: center;
 }
 
 .bold{
@@ -245,6 +245,8 @@ table, th, td {
 	margin:10px auto;
 	display:flex;
 	flex-direction: column;
+	flex-shrink:1;
+	flex-grow:0;
 }
 
 .points{
@@ -265,7 +267,7 @@ table, th, td {
 }
 
 .problemStatement{
-	margin:0px auto 20px auto;
+	margin:10px auto 20px auto;
 }
 
 .answerArea{
@@ -286,9 +288,42 @@ table, th, td {
   padding-left: 5px;
 }
 
+.diagram{
+	margin-bottom: 10px;
+}
+
+.diagram img{
+	border:2px solid rgb(28,116,188);
+}
+
 /* end problem formatting */
 
+#testMetadata{
+	display:inline-flex;
+	justify-content: space-between;
+}
 
+#testLength{
+	color:rgb(85.12,125.44,25.6);
+}
+
+#testInfo{
+	max-width:250px;
+	display:flex;
+	flex-direction: column;
+	flex-grow: 1;
+	flex-shrink:0;
+	flex-basis:0px;
+}
+
+#calculator{
+
+}
+
+#testForm{
+	display:inline-flex;
+	justify-content: space-between;
+}
 
 
 #personalInfo{

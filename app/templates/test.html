@@ -13,8 +13,6 @@
 
 
   <body>
-    <form method="post" action="">
-    {{form.csrf_token}}
 
     <div id="navbar">
       {% include 'navbar.html' %}
@@ -24,6 +22,12 @@
       <h1>{{ name }}</h1>
     </header>
     <div class="mainSection">
+
+
+    <form method="post" action="" id="testForm">
+    {{form.csrf_token}}
+
+      <!-- left sidebar: login box -->
       <div class="sidebar">
           <button type="button" class="collapser">»</button>
           <div id="infoContents" >
@@ -74,10 +78,7 @@
         </div>
 
 
-        <!-- Here we have the box for entering personal info
-            and submitting the form. -->
-
-        <div></div>
+       <!-- end left sidebar -->
 
 
 
@@ -112,6 +113,13 @@
             <div class="problemStatement">
               <p>{{ answer.label }}</p>
             </div>
+
+            <!-- the diagram, if any -->
+            {% if images[loop.index-1] %}
+              <div class="diagram">
+                <img src="{{ url_for('static', filename='images/'+images[loop.index-1]) }}" width="100" />
+              </div>
+            {% endif %}
               
               <!-- the answer blank , with units-->
             <div class="answerArea">
@@ -144,8 +152,33 @@
       </form>
 
       <!-- rules info -->
-      <div class="infobar">
-        x
+      <div class="infobar" id="testInfo">
+        <!-- begin test metadata -->
+        <div id="testMetadata">
+          <div id="testLength">
+            {{points|length}} problems
+          </div>
+          <div id="calculator">
+            <svg viewBox="-1 -2 26 26" width="1.5em">
+              <path d="M18,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V4C20,2.9,19.1,2,18,2z M18,8H6V4h12V8z M9,12H7v-2h2V12z   M13,12h-2v-2h2V12z M9,16H7v-2h2V16z M13,16h-2v-2h2V16z M9,20H7v-2h2V20z M13,20h-2v-2h2V20z M17,12h-2v-2h2V12z M17,16h-2v-2h2  V16z M17,20h-2v-2h2V20z"></path>
+
+              <rect x="15" y="5" width="2" height="2"></rect>
+
+              <circle cx="12" cy="12" r="12" fill="none" stroke="red" stroke-width="2" />
+
+              <line x1="3" x2="20" y1="4" y2="21" stroke="red" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+        <!-- end test metadata -->
+
+        <!-- begin test rules -->
+
+        <div id="rules">
+          Lorem ipsum text text text goes here writing things and words and stuff about math and how to do math and things like that 
+        </div>
+
+        <!-- end test rules -->
       </div>
 
 
@@ -169,6 +202,13 @@
 
 
     </script> 
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+      };
+    </script>
 
   </body>
 </html>
