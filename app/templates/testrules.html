@@ -1,0 +1,32 @@
+<div class="infobar" id="testInfo">
+        <!-- begin test metadata -->
+        <div id="testMetadata">
+          <div id="testLength">
+            {{points|length}} problems
+          </div>
+
+          <!-- display calculator icon -->
+          {% if calculators %}
+            <div class="hoverable">
+               {% include 'yescalculators.svg' %}
+                <span class="hovertext hoverTopLeft">Calculators are allowed on this test.</span>
+            </div> 
+          {% else %}
+            <div class="hoverable">
+               {% include 'nocalculators.svg' %}
+                <span class="hovertext hoverTopLeft">No calculators are allowed on this test.</span>
+            </div> 
+          {% endif %}
+
+        </div>
+        <!-- end test metadata -->
+
+        <!-- begin test rules -->
+        {% if rules %}
+          <div id="rules">
+            {{ rules|safe }}
+          </div>
+        {% endif %}
+
+        <!-- end test rules -->
+      </div>

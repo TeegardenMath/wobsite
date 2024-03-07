@@ -1,0 +1,71 @@
+ <div id="problemsBlock">
+
+        {% for answer in form.answers %}
+          <section class="problem">
+              <!--start individual problem-->
+
+              <!-- container for number and points -->
+            <div class="problemMetadata">
+              <!-- number -->
+              <div class="problemNumber">
+                <p>Problem {{ loop.index }}</p>
+              </div>
+              <!-- points -->
+              <div class="points">
+                  {{points[loop.index-1]}}
+                  {% if points[loop.index-1]>1 %}
+                    points
+                  {% else %}
+                    point
+                  {% endif %}
+              </div>
+            </div>
+
+              <!-- the problem statement -->
+            <div class="problemStatement">
+              <p>{{ answer.label }}</p>
+            </div>
+
+            <!-- the diagram, if any -->
+            {% if images[loop.index-1] %}
+              <div class="diagram">
+                <img src="{{ url_for('static', filename='images/'+images[loop.index-1]) }}" width="100" />
+              </div>
+            {% endif %}
+              
+              <!-- the answer blank , with units-->
+            <div class="answerArea">
+              <!-- answer blank itself -->
+              <div class="answerEntry">{{ answer['answer'] }}</div>
+              <!-- units, if any -->
+              {% if units[loop.index-1] %}
+                <div class="unitArea">
+                  {{ units[loop.index-1] }}
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- errors, if any -->
+            {% if answer.errors %}
+              <div class="errorZone">
+                {% for error in answer.errors %}
+                  {{answer.errors['answer'][0]}}<br>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <!-- hint, if any -->
+            {% if hints[loop.index-1] %}
+              <div class="problemMetadata">
+                <div class="hint hoverable">
+                  Hint
+                  <span class="hovertext hoverBottomRight">{{ hints[loop.index-1] }}</span>
+                </div>
+              </div>
+            {% endif %}
+
+            <!--end individual problem-->
+          </section>
+        {% endfor %}
+
+        </div> 

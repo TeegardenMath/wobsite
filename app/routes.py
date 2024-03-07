@@ -97,7 +97,7 @@ def openTest(testID):
 
 			#now we find the problems for those IDs
 			curs.execute("""
-				SELECT problem, answertype, unit, points, image
+				SELECT problem, answertype, unit, points, image, hint
 				FROM problems
 				WHERE id = ANY(%s);
 				""", (problemIDs,))
@@ -177,7 +177,7 @@ def gradeTest(form,testID):
 
 	#format them for postgres queries
 	problemkeylist=problemkeylist+",grade, test, maxscore"
-	problemkeylist2=problemkeylist2+","+str(score)+","+testID+","+str(maxScore)
+	problemkeylist2=problemkeylist2+","+str(score)+","+str(testID)+","+str(maxScore)
 
 	#make a connection
 	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
@@ -191,6 +191,22 @@ def gradeTest(form,testID):
 			#redirect on submission success
 			return url_for(".submitted",score=score,maxscore=maxScore,results=results,username=form.username.data,testID=testID)
 
+
+def existsVisibly(testID):
+	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
+		with conn.cursor() as curs:
+			curs.execute("""
+				SELECT visible
+				FROM tests
+				WHERE id=%s;
+				""",[testID])
+			isVisible = curs.fetchall()
+
+	if len(isVisible) == 0 or not isVisible[0][0]:
+		return False
+	return True
+
+### HERE BEGINNETH THE LIST OF ROUTES ###
 
 
 @bp.route("/")
@@ -215,24 +231,16 @@ def main():
 
 
 
-@bp.route("/test/<testID>", methods=['GET', 'POST'])
+@bp.route("/test/<int:testID>", methods=['GET', 'POST'])
 def test(testID):
 	#first, check if there's even a test at that ID
-	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
-		with conn.cursor() as curs:
-			curs.execute("""
-				SELECT visible
-				FROM tests
-				WHERE id=%s;
-				""",[testID])
-			isVisible = curs.fetchall()
 
-	if len(isVisible) == 0 or not isVisible[0][0]:
+	if not existsVisibly(testID):
 		return render_template("notest.html")
 
 
 	#now, get underway
-	problemList = openTest(testID) # [problem, answertype, unit, points, image]
+	problemList = openTest(testID) # [problem, answertype, unit, points, image, hint]
 
 	#set up the input form
 	form = create_test_form(problemList)
@@ -277,6 +285,7 @@ def test(testID):
 	pointList=[]
 	unitList=[]
 	imageList=[]
+	hintList=[]
 	for problem in problemList:
 		pointList.append(problem[3])
 		unitList.append(problem[2])
@@ -284,15 +293,22 @@ def test(testID):
 			imageList.append(problem[4])
 		else:
 			imageList.append(False)
+		if problem[5]:
+			hintList.append(problem[5])
+		else:
+			hintList.append(False)
 
 
 	##actually load that page
-	return render_template("test.html", form=form, name=testName, points=pointList, units=unitList, images=imageList, rules=testRules, calculators=calculatorsAllowed)
+	return render_template("test.html", form=form, name=testName, points=pointList, units=unitList, images=imageList, hints=hintList, rules=testRules, calculators=calculatorsAllowed)
 
 @bp.route("/highscores", defaults={'testID': 0})
-@bp.route("/highscores/<testID>")
+@bp.route("/highscores/<int:testID>")
 def highscores(testID):
 	scoreRatioList=[]
+
+	if int(testID)>0 and not existsVisibly(testID):
+		return render_template("notest.html")
 	#make a connection
 	with psycopg2.connect(**CONNECTION_PARAMETERS) as conn:
 		#create a cursor
