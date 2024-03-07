@@ -14,29 +14,58 @@
 
   <div class="mainSection">
 
-    {% for testgroup in testgroups %}
-    {% if testgroup[2] %} <!-- if it's visible -->
-        <div class="testGroup">
-          <div class="groupTitle">{{testgroup[1]}}</div>
-          <table class="standardTable testTable">
-            <tbody>
-              {% for test in testlist %}
-                {% if test[3] %} <!-- if it's visible -->
-                  {% if test[2] == testgroup[0] %} <!-- if it's in this group -->
-                    <tr>
-                      <td><a href="/test/{{test[0]}}">{{test[1]}}</a></td>
-                    </tr>
+    <div id="allTests">
+      {% for testgroup in testgroups %}
+      {% if testgroup[2] %} <!-- if it's visible -->
+          <div class="testGroup">
+            <div class="groupTitle">{{testgroup[1]}}</div>
+            <table class="standardTable testTable">
+              <tbody>
+                {% for test in testlist %}
+                  {% if test[3] %} <!-- if it's visible -->
+                    {% if test[2] == testgroup[0] %} <!-- if it's in this group -->
+                      <tr>
+                        <td id="{{loop.index}}" class="testrow">
+                          <a href="/test/{{test[0]}}">{{test[1]}}</a>
+                        </td>
+                      </tr>
+                    {% endif %}
                   {% endif %}
-                {% endif %}
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      {% endif %}
-    {% endfor %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <div class="infobar" id="testHover">
+
+      test info
+    </div>
     
 
   </div>
+
+  <script type="text/javascript"> /* this handles hoverable information*/
+
+      var coll = document.getElementsByClassName("testrow");
+      var i;
+
+      for (i = 0; i < coll.length; i++) {
+        
+        coll[i].addEventListener("mouseover", function() {
+          idNum=Number(this.id)-1
+          descriptionlist={{descriptionlist|safe}}
+          document.getElementById("testHover").innerHTML = descriptionlist[idNum];
+        })
+      }
+
+
+    </script> 
+
+
+
 
 </body>
 </html>

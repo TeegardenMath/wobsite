@@ -237,7 +237,7 @@ def main():
 		#create a cursor
 		with conn.cursor() as curs:
 			curs.execute("""
-				SELECT id, name, testgroup_id, visible
+				SELECT id, name, testgroup_id, visible, description
 				FROM tests
 				""")
 			testList = curs.fetchall()
@@ -248,7 +248,15 @@ def main():
 				""")
 			testgroups = curs.fetchall()
 
-	return render_template("main.html", testlist=testList, testgroups=testgroups)
+	# format the descriptions so javascript can access them
+	descriptionList=[]
+	for test in testList:
+		if test[4]==None:
+			descriptionList.append("No description available")
+		else:
+			descriptionList.append(test[4])
+
+	return render_template("main.html", testlist=testList, testgroups=testgroups, descriptionlist=descriptionList)
 
 
 

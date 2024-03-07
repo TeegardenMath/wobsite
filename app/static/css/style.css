@@ -24,6 +24,11 @@ body {
 	padding-top:10px;
 }
 
+#allTests{
+	display:flex;
+	flex-wrap:wrap;
+}
+
 .bold{
 	font-weight:bold;
 }
@@ -240,7 +245,9 @@ table, th, td {
   visibility: visible;
 }
 
-
+#testHover{
+	width:250px;
+}
 
 
 
