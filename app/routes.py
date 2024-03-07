@@ -70,11 +70,32 @@ def grade(scantron,testID):
 					score.append(answerKey[i][2])
 				else:
 					score.append(0)
+
+			#handle true-or-false answers
+			if answerKey[i][1] == "tf":
+				if tfNormalize(str(scantron[i])) == tfNormalize(str(answerKey[i][0])):
+					score.append(answerKey[i][2])
+				else:
+					score.append(0)
 		else:
 			score.append(0) #no answer, no points
 		i+=1
 
 	return [score, maxscore]
+
+# this function takes a string indicating true or false
+# and normalizes it to a boolean value
+
+def tfNormalize(answer):
+	trueList=["true","t","yes","y"]
+	falseList=["false","f","no","n"]
+	answer=answer.casefold()
+	if not answer[-1].isalpha():
+		answer=answer[:-1]
+	if answer in trueList:
+		return True 
+	if answer in falseList:
+		return False
 
 
 
@@ -143,14 +164,15 @@ def gradeTest(form,testID):
 	problemkeylist2="'"+form.username.data+"\',\'"+form.email.data+"'"
 	for answer in form.answers:
 		problemkey = "answer"+str(problemcounter)
+		print("grading")
 
 		#convert answers into appropriate format
 		thisAnswer=answer.answer.data
-		expectedType = typeList[problemcounter-1]
+		expectedType = typeList[problemcounter-1][0]
 		if thisAnswer:
 			if expectedType == "numeric":
 				thisAnswer=float(thisAnswer)
-			elif expectedType == "string":
+			elif expectedType == "string" or expectedType == "tf":
 				thisAnswer=str(thisAnswer)
 			answerlist[problemkey]=thisAnswer
 		else:

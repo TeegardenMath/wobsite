@@ -75,6 +75,18 @@ def profanityFilter(fieldname="Field"):
 
     return _profanityFilter
 
+def tfFilter(fieldname="Field"):
+    def _tfFilter(form,field):
+        answer=field.data
+        tfList=["true","t","yes","y","false","f","no","n"]
+        answer=answer.casefold()
+        if not answer[-1].isalpha():
+            answer=answer[:-1]
+        if not answer in tfList:
+            raise ValidationError("Please answer 'true' or 'false'.")
+
+    return _tfFilter
+
 def numericFilter(fieldname="Field"):
     def _numericFilter(form,field):
         answer=field.data
@@ -112,6 +124,8 @@ def create_test_form(problemList): # problemList = [problem, answertype, unit, p
         field.label=problemList[ii][0]
         if problemList[ii][1] == "numeric":
             field.answer.validators=[Optional(),numericFilter()]
+        if problemList[ii][1] == "tf":
+            field.answer.validators=[Optional(),tfFilter()]
 
         ii+=1
 
