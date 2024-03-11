@@ -39,9 +39,13 @@
       {% endfor %}
     </div>
 
-    <div class="infobar" id="testHover">
+    <div class="infobar">
+      <div id="hoverName">
 
-      test info
+      </div>
+      <div id="testHover">
+      Hover over a test for more details.
+      </div>
     </div>
     
 
@@ -57,7 +61,9 @@
         coll[i].addEventListener("mouseover", function() {
           idNum=Number(this.id)-1
           descriptionlist={{descriptionlist|safe}}
+          namelist={{namelist|safe}}
           document.getElementById("testHover").innerHTML = descriptionlist[idNum];
+          document.getElementById("hoverName").innerHTML = "<h3>"+namelist[idNum]+"</h3>";
         })
       }
 

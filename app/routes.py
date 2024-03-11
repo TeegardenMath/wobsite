@@ -250,13 +250,20 @@ def main():
 
 	# format the descriptions so javascript can access them
 	descriptionList=[]
+	nameList=[]
 	for test in testList:
 		if test[4]==None:
 			descriptionList.append("No description available")
 		else:
 			descriptionList.append(test[4])
+		title=test[1]
+		if ":" in title:
+			titleList=(title.split(":"))
+			title=":<br>".join(titleList)
 
-	return render_template("main.html", testlist=testList, testgroups=testgroups, descriptionlist=descriptionList)
+		nameList.append(title)
+
+	return render_template("main.html", testlist=testList, testgroups=testgroups, descriptionlist=descriptionList,namelist=nameList)
 
 
 

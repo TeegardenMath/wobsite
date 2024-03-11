@@ -101,6 +101,10 @@ input[type=number] {
 	height: fit-content;
 }
 
+.infobar h3{
+	color:rgb(66.5,98,20);
+}
+
 /* end infobar */
 
 #sampleShare{
@@ -248,6 +252,7 @@ table, th, td {
 #testHover{
 	width:250px;
 }
+
 
 
 
