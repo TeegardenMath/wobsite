@@ -112,6 +112,8 @@ def fracFilter(fieldname="Field"):
             answer=mixedform[1]
         if "/" in answer:
             fracform=answer.split("/",1)
+            fracform[0]=fracform[0].strip()
+            fracform[1]=fracform[1].strip()
             if not isfloat(fracform[0]) or not isfloat(fracform[1]):
                 isNumeric=False 
             else:

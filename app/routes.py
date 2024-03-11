@@ -77,6 +77,13 @@ def grade(scantron,testID):
 					score.append(answerKey[i][2])
 				else:
 					score.append(0)
+
+			#handle fractional answers
+			if answerKey[i][1]=="fraction":
+				if fractionFormat(scantron[i])==fractionFormat(answerKey[i][0]):
+					score.append(answerKey[i][2])
+				else:
+					score.append(0)
 		else:
 			score.append(0) #no answer, no points
 		i+=1
@@ -127,6 +134,35 @@ def openTest(testID):
 
 
 	return problemList;
+
+#this function takes a fraction, mixed number,
+#or decimal, and returns a decimal
+def fractionFormat(num):
+	try:
+		#if it's just a float, just use that
+		num = float(num)
+	except:
+		#mixed numbers
+		if " " in num:
+			mixed=num.split(" ",1)
+			mixed[0]=mixed[0].strip()
+			mixed[1]=mixed[1].strip()
+			num=float(mixed[0])+simpleFraction(mixed[1])
+		else:
+			num=simpleFraction(num)
+	return num
+
+
+#this function takes a fraction
+#and returns a decimal
+def simpleFraction(num):
+	num=num.split("/",1)
+	num[0]=num[0].strip()
+	num[1]=num[1].strip()
+	num[0]=float(num[0])
+	num[1]=float(num[1])
+	num = num[0]/num[1]
+	return num
 	
 
 
@@ -174,6 +210,8 @@ def gradeTest(form,testID):
 				thisAnswer=float(thisAnswer)
 			elif expectedType == "string" or expectedType == "tf":
 				thisAnswer=str(thisAnswer)
+			elif expectedType == "fraction":
+				thisAnswer=fractionFormat(thisAnswer)
 			answerlist[problemkey]=thisAnswer
 		else:
 			answerlist[problemkey]=None
