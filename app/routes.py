@@ -424,7 +424,16 @@ def highscores(testID):
 					scoreRatio=math.floor(scoreRatio)
 					scoreRatioList.append(scoreRatio)
 
-				print (testIDList)
+				#now we need to sort the rows by percentage score
+				newScoreList=[]
+				for index,ratio in enumerate(scoreRatioList):
+					newScoreList.append((ratio,rows[index]))
+
+				newScoreList=sorted(newScoreList, key=itemgetter(0),reverse=True)
+				scoreRatioList, rows = list(zip(*newScoreList))
+
+
+				# print (testIDList)
 				curs.execute("""
 					SELECT id,name
 					FROM tests
