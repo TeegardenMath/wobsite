@@ -469,6 +469,16 @@ def highscores(testID):
 			testList = curs.fetchall()
 
 	print(graphdata)
+	nameList, scoreList = list(zip(*graphdata))
+	newScoreList=[]
+	for index, score in enumerate(scoreList):
+		if index > 0:
+			newScoreList.append(float(score))
+
+	if max(newScoreList)==min(newScoreList):
+		bucketed=0 
+	else:
+		bucketed=1
 
 	return render_template("highscores.html", 
 		rows=rows[:10],
@@ -476,7 +486,8 @@ def highscores(testID):
 		testID=int(testID),
 		namekey=nameKey,
 		scoreratiolist=scoreRatioList,
-		graphdata=graphdata)
+		graphdata=graphdata,
+		bucketed=bucketed)
 
 
 @bp.route("/submitted")

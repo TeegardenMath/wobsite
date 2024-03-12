@@ -7,6 +7,9 @@
 		// Set Data
 		const data = google.visualization.arrayToDataTable({{graphdata|safe}});
 
+		console.log({{graphdata|safe}})
+		console.log(data)
+
 		// Set Options
 		const options = {
 		  backgroundColor: 'none',
@@ -21,6 +24,10 @@
 		  	bucketSize:1
 		  }
 		};
+
+		if ({{bucketed}} == 0){
+			options.histogram.bucketSize='None'
+		}
 
 		// Draw
 		const chart = new google.visualization.Histogram(document.getElementById('myChart'));
