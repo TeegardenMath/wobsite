@@ -220,7 +220,7 @@ table, th, td {
 .hoverable .hovertext {
   visibility: hidden;
   min-width:fit-content;
-  width: 120px;
+  width: 150px;
   background-color: rgb(231, 246, 209);
   color: black;
   text-align: center;

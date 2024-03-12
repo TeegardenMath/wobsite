@@ -7,6 +7,7 @@ from wtforms.validators import (
     Optional,
     Email
 )
+from operator import itemgetter
 
 #create a blueprint
 bp = Blueprint('main', __name__, url_prefix='/') 
@@ -117,21 +118,34 @@ def openTest(testID):
 		with conn.cursor() as curs:
 			#first we find the list of problem IDs for this test
 			curs.execute("""
-				SELECT problem_id
+				SELECT problem_id,ordering
 				FROM problemtest
 				WHERE test_id=%s;
 				""",[testID])
-			problemIDs = curs.fetchall()
+			problemIDsAndOrder = curs.fetchall()
 
+			# print(problemIDsAndOrder)
+
+			problemIDs, problemOrder = list(zip(*problemIDsAndOrder))
+			problemIDs=list(problemIDs)
+
+			# print(problemIDs)
 			#now we find the problems for those IDs
 			curs.execute("""
-				SELECT problem, answertype, unit, points, image, hint
+				SELECT problem, answertype, unit, points, image, hint, id
 				FROM problems
 				WHERE id = ANY(%s);
 				""", (problemIDs,))
 			#fetch the records
 			problemList = curs.fetchall()
 
+	# order the problems correctly
+	orderDict=dict(problemIDsAndOrder)
+	newProblemList=[]
+	for problem in problemList:
+		newProblemList.append((orderDict[problem[6]],problem))
+	newProblemList=sorted(newProblemList, key=itemgetter(0))
+	problemIDs, problemList = list(zip(*newProblemList))
 
 	return problemList;
 
