@@ -531,7 +531,17 @@ def submitted():
 	for row in rows:
 		graphdata.append([row[0],row[1]])
 
-	return render_template("submitted.html",score=score,maxscore=maxscore,congrats=congratslist[roundedperten],results=results,username=username,testID=testID,testname=testName[0][0],graphdata=graphdata)
+	bucketed = 1
+	nameList, scoreList = list(zip(*graphdata))
+	newScoreList=[]
+	for index, score in enumerate(scoreList):
+		if index > 0:
+			newScoreList.append(float(score))
+
+	if max(newScoreList)==min(newScoreList):
+		bucketed=0 
+
+	return render_template("submitted.html",score=score,maxscore=maxscore,congrats=congratslist[roundedperten],results=results,username=username,testID=testID,testname=testName[0][0],graphdata=graphdata,bucketed=bucketed)
 
 @bp.route("/trophy")
 def trophy():
