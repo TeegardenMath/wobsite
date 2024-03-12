@@ -468,17 +468,25 @@ def highscores(testID):
 				""")
 			testList = curs.fetchall()
 
-	print(graphdata)
-	nameList, scoreList = list(zip(*graphdata))
-	newScoreList=[]
-	for index, score in enumerate(scoreList):
-		if index > 0:
-			newScoreList.append(float(score))
+	# this is a workaround for a google graphs bug.
+	# setting the histogram bucket size causes errors
+	# if there's only one value represented in the data set.
+	# so, if we're drawing a graph,
+	# we check to see if there's only one value,
+	# and if so, we don't set the bucket size.
 
-	if max(newScoreList)==min(newScoreList):
-		bucketed=0 
-	else:
-		bucketed=1
+	bucketed = 1
+	if graphdata:
+		nameList, scoreList = list(zip(*graphdata))
+		newScoreList=[]
+		for index, score in enumerate(scoreList):
+			if index > 0:
+				newScoreList.append(float(score))
+
+		if max(newScoreList)==min(newScoreList):
+			bucketed=0 
+
+	# finally, we actually render it.
 
 	return render_template("highscores.html", 
 		rows=rows[:10],
