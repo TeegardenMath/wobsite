@@ -456,9 +456,12 @@ def highscores(testID):
 				nameKey=False
 
 				#format for graph display
-				graphdata=[["username","grade"]]
-				for row in rows:
-					graphdata.append([row[0],row[1]])
+				if len(rows) == 0:
+					graphdata=False
+				else:
+					graphdata=[["username","grade"]]
+					for row in rows:
+						graphdata.append([row[0],row[1]])
 			#fetch the records
 			
 
