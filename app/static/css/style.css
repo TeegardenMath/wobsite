@@ -99,6 +99,7 @@ input[type=number] {
 	border-radius: 6px;
 	float: right;
 	height: fit-content;
+	overflow: scroll;
 }
 
 .infobar h3{
@@ -251,7 +252,7 @@ table, th, td {
 }
 
 #testHover{
-	width:250px;
+	max-width: 250px;
 }
 
 
