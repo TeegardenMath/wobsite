@@ -65,6 +65,20 @@
 
 
     </script> 
+    <script type="text/javascript"> /* this scrolls to bottom */
+
+      var coll = document.getElementsByClassName("jumpButton");
+      var i;
+      var bottom = document.getElementById("personalInfoZone")
+
+      for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+          // scroll to bottom
+          bottom.scrollIntoView();
+        })
+      }
+
+    </script>
     <script>
       MathJax = {
         tex: {
