@@ -9,6 +9,7 @@ header {
 
 body {
 	margin:0px;
+/*	border:2px solid red;*/
 }
 
 #problemsBlock p{
@@ -16,13 +17,6 @@ body {
 	margin:0px;
 }
 
-.mainSection{
-	display:flex;
-	margin: 0px auto;
-	justify-content: center;
-	padding-bottom:25px;
-	padding-top:10px;
-}
 
 #allTests{
 	display:flex;
@@ -54,6 +48,8 @@ input[type=number] {
 	border:2px solid rgb(133,196,40);
 	padding:10px;
 	margin-top:0px;
+	margin-right: 0px;
+	box-sizing: border-box;
 }
 
 .navElement{
@@ -262,6 +258,7 @@ table, th, td {
 #problemsBlock{
 	text-align: center;
 	width:100%;
+/*	border: 2px solid red;*/
 }
 
 .problem {
@@ -351,24 +348,13 @@ table, th, td {
 	color:rgb(85.12,125.44,25.6);
 }
 
-#testInfo{
-	max-width:250px;
-	display:flex;
-	flex-direction: column;
-	flex-grow: 1;
-	flex-shrink:0;
-	flex-basis:0px;
-}
+
 
 
 #testForm{
 	display:inline-flex;
 	justify-content: space-between;
-}
-
-.personalInfo{
-	position:sticky;
-	top:10px;
+/*	border:2px solid red;*/
 }
 
 
@@ -409,6 +395,79 @@ table, th, td {
 	align-items: center;
 }
 
+#testInfo{
+		max-width:250px;
+		display:flex;
+		flex-direction: column;
+		flex-grow: 1;
+		flex-shrink:0;
+		flex-basis:0px;
+	}
+
+.mainSection{
+		display:flex;
+		margin: 0px auto;
+		justify-content: center;
+		padding-bottom:25px;
+		padding-top:10px;
+/*		border:2px solid red;*/
+}
+
+
+
+/* mobile display */
+@media only screen and (max-width: 768px) {
+	.mainSection{
+		flex-direction: column;
+	}
+	#testForm{
+		flex-direction: column-reverse;
+	}
+	.personalInfo {
+		margin:0px auto;
+		left:0;
+		right:0;
+		box-sizing: border-box;
+		width:100%;
+		text-align: center;
+	}
+	.personalInfo .collapser{
+		display:none;
+	}
+	.personalInfoLabel{
+		color:rgb(66.5,98,20);
+		font-weight: bold;
+		margin-bottom: 2px;
+	}
+	#testInfo{
+		display: none;
+	}
+	.mobileZone{
+		width:100%;
+		display: inline-flex;
+		justify-content: space-between;
+		padding: 0px 10px;
+		box-sizing: border-box;
+/*		border: 2px solid red;*/
+	}
+	#problemsBlock{
+/*		padding:0px 5px;*/
+/*		border:2px solid red;*/
+	}
+}
+
+@media only screen and (min-width: 769px) {
+	.mainSection{
+		flex-direction: row;
+	}
+	.personalInfo{
+		position:sticky;
+		top:10px;
+	}
+	.mobileZone{
+		display:none;
+	}
+}
 
 
 

@@ -2,7 +2,7 @@
           <button type="button" class="collapser">»</button>
           <div id="infoContents" >
             <!--Username entry box and error display-->
-            <p>{{form.username.label}}</p>
+            <p class="personalInfoLabel">{{form.username.label}}</p>
             <div id ="entryBlank">
                 {{form.username()}}
                 <div class="hoverable">
@@ -21,7 +21,7 @@
             </div>
 
             <!--Email entry box and error display-->
-            <p>{{form.email.label}}</p>
+            <p class="personalInfoLabel">{{form.email.label}}</p>
             <div id="entryBlank">
                 {{form.email()}}
                 <div class="hoverable">
