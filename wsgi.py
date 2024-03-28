@@ -2,4 +2,4 @@
 from app import routes
  
 if __name__ == "__routes__":
-        app.run()
+        routes.run()
