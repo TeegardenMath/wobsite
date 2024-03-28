@@ -1,1 +1,1 @@
-web: gunicorn wobsite:app
+web: gunicorn wsgi:app
